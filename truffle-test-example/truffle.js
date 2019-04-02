@@ -60,6 +60,11 @@ function truffleConfig({
         provider: getProvider(urlKovan),
         network_id: '42'
       }
+    },
+    compilers: {
+      solc: {
+        version: '0.5.2'
+      }
     }
   };
 }
