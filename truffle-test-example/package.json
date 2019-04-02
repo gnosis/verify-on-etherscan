@@ -1,0 +1,17 @@
+{
+  "name": "test-link-pkg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^7.0.0",
+    "openzeppelin-solidity": "2.2.0",
+    "truffle": "5.0.9",
+    "truffle-hdwallet-provider": "1.0.5"
+  }
+}
