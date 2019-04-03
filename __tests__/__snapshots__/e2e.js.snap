@@ -132,7 +132,7 @@ Object {
     "contractaddress": "0xE71d2dDb3CA69a94b557695a9614D3262845EA11",
     "contractname": "TestChildContract",
     "hasNonEmptyConstructor": true,
-    "sourcePath": "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/contracts/TestChildContract.sol",
+    "sourcePath": "$PROJECT_DIR/truffle-test-example/contracts/TestChildContract.sol",
     "txhash": "0xac7d32930a2d67ba1e6483f312c22c4e8a767432f8049d15679675ccfde4647a",
   },
   "build/contracts/TestContract.json": Object {
@@ -141,7 +141,7 @@ Object {
     "contractaddress": "0xC6FC5E99b5D253f6eabf53Fb2eAB94AF4e6A1444",
     "contractname": "TestContract",
     "hasNonEmptyConstructor": false,
-    "sourcePath": "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/contracts/TestContract.sol",
+    "sourcePath": "$PROJECT_DIR/truffle-test-example/contracts/TestContract.sol",
     "txhash": "0x337979f13646e71f516251fecf56f0444974c29d19ce9a75cd27f0ceaeab4126",
   },
   "build/contracts/TestToken.json": Object {
@@ -150,7 +150,7 @@ Object {
     "contractaddress": "0xbE14913754d5A03c8f7c81C98c499033422898Be",
     "contractname": "TestToken",
     "hasNonEmptyConstructor": true,
-    "sourcePath": "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/contracts/TestToken.sol",
+    "sourcePath": "$PROJECT_DIR/truffle-test-example/contracts/TestToken.sol",
     "txhash": "0xa13e7bc919d05debf75202dd989071abdd9700a719df904ad403eb2254bc7cc6",
   },
 }
@@ -916,7 +916,7 @@ Object {
     "contractaddress": "0xb1c657fa3806D78716dfcBeA9aF1aCf851077D6E",
     "contractname": "Migrations",
     "hasNonEmptyConstructor": false,
-    "sourcePath": "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/contracts/Migrations.sol",
+    "sourcePath": "$PROJECT_DIR/truffle-test-example/contracts/Migrations.sol",
     "txhash": "0xa97b0336decd7c7534424068bb61eedcd71714bd305f2e2b26cc1ec5ce84efe1",
   },
   "build/contracts/TestChildContract.json": Object {
@@ -925,7 +925,7 @@ Object {
     "contractaddress": "0xE71d2dDb3CA69a94b557695a9614D3262845EA11",
     "contractname": "TestChildContract",
     "hasNonEmptyConstructor": true,
-    "sourcePath": "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/contracts/TestChildContract.sol",
+    "sourcePath": "$PROJECT_DIR/truffle-test-example/contracts/TestChildContract.sol",
     "txhash": "0xac7d32930a2d67ba1e6483f312c22c4e8a767432f8049d15679675ccfde4647a",
   },
   "build/contracts/TestContract.json": Object {
@@ -934,7 +934,7 @@ Object {
     "contractaddress": "0xC6FC5E99b5D253f6eabf53Fb2eAB94AF4e6A1444",
     "contractname": "TestContract",
     "hasNonEmptyConstructor": false,
-    "sourcePath": "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/contracts/TestContract.sol",
+    "sourcePath": "$PROJECT_DIR/truffle-test-example/contracts/TestContract.sol",
     "txhash": "0x337979f13646e71f516251fecf56f0444974c29d19ce9a75cd27f0ceaeab4126",
   },
   "build/contracts/TestToken.json": Object {
@@ -943,18 +943,17 @@ Object {
     "contractaddress": "0xbE14913754d5A03c8f7c81C98c499033422898Be",
     "contractname": "TestToken",
     "hasNonEmptyConstructor": true,
-    "sourcePath": "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/contracts/TestToken.sol",
+    "sourcePath": "$PROJECT_DIR/truffle-test-example/contracts/TestToken.sol",
     "txhash": "0xa13e7bc919d05debf75202dd989071abdd9700a719df904ad403eb2254bc7cc6",
   },
 }
 `;
 
 exports[`Outputs Flattened outputs flattened contracts to a folder 1`] = `
-[MockFunction] {
-  "calls": Array [
-    Array [
-      "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/output/here/ERC20.flat.sol",
-      "
+Array [
+  Array [
+    "$PROJECT_DIR/truffle-test-example/output/here/ERC20.flat.sol",
+    "
 // File: openzeppelin-solidity/contracts/token/ERC20/IERC20.sol
 
 pragma solidity ^0.5.2;
@@ -1241,10 +1240,10 @@ contract ERC20 is IERC20 {
     }
 }
 ",
-    ],
-    Array [
-      "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/output/here/Migrations.flat.sol",
-      "
+  ],
+  Array [
+    "$PROJECT_DIR/truffle-test-example/output/here/Migrations.flat.sol",
+    "
 // File: contracts/Migrations.sol
 
 pragma solidity >=0.4.21 <0.6.0;
@@ -1271,10 +1270,10 @@ contract Migrations {
   }
 }
 ",
-    ],
-    Array [
-      "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/output/here/TestChildContract.flat.sol",
-      "
+  ],
+  Array [
+    "$PROJECT_DIR/truffle-test-example/output/here/TestChildContract.flat.sol",
+    "
 // File: contracts/TestParentContract.sol
 
 pragma solidity >=0.4.21 <0.6.0;
@@ -1302,10 +1301,10 @@ contract TestChildContract is TestParentContract(\\"Parent\\") {
     }
 }
 ",
-    ],
-    Array [
-      "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/output/here/TestContract.flat.sol",
-      "
+  ],
+  Array [
+    "$PROJECT_DIR/truffle-test-example/output/here/TestContract.flat.sol",
+    "
 // File: contracts/TestContract.sol
 
 pragma solidity >=0.4.21 <0.6.0;
@@ -1318,10 +1317,10 @@ contract TestContract {
     }
 }
 ",
-    ],
-    Array [
-      "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/output/here/TestToken.flat.sol",
-      "
+  ],
+  Array [
+    "$PROJECT_DIR/truffle-test-example/output/here/TestToken.flat.sol",
+    "
 // File: openzeppelin-solidity/contracts/token/ERC20/IERC20.sol
 
 pragma solidity ^0.5.2;
@@ -1666,31 +1665,8 @@ contract TestToken is ERC20, ERC20Detailed {
     ) ERC20Detailed(name, symbol, decimals) public {}
 }
 ",
-    ],
   ],
-  "results": Array [
-    Object {
-      "type": "return",
-      "value": undefined,
-    },
-    Object {
-      "type": "return",
-      "value": undefined,
-    },
-    Object {
-      "type": "return",
-      "value": undefined,
-    },
-    Object {
-      "type": "return",
-      "value": undefined,
-    },
-    Object {
-      "type": "return",
-      "value": undefined,
-    },
-  ],
-}
+]
 `;
 
 exports[`Posts to verify 1`] = `
@@ -2875,11 +2851,13 @@ Object {
     "build/contracts/TestToken.json",
     "build/contracts/TwoContract.json",
   ],
-  "cwd": "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example",
+  "cwd": "$PROJECT_DIR/truffle-test-example",
+  "logger": undefined,
   "network": "rinkeby",
   "optimizer": undefined,
   "output": undefined,
   "useFetch": undefined,
+  "verbose": undefined,
   "web3": Any<Web3>,
 }
 `;
@@ -2888,18 +2866,19 @@ exports[`Process config working config 1`] = `
 Object {
   "apiUrl": "https://api-rinkeby.etherscan.io/api",
   "artifacts": Array [
-    "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/build/contracts/ERC20.json",
-    "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/build/contracts/ERC20Detailed.json",
-    "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/build/contracts/IERC20.json",
-    "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/build/contracts/Migrations.json",
-    "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/build/contracts/OneContract.json",
-    "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/build/contracts/SafeMath.json",
-    "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/build/contracts/TestChildContract.json",
-    "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/build/contracts/TestContract.json",
-    "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/build/contracts/TestParentContract.json",
-    "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/build/contracts/TestToken.json",
-    "/home/velenir/Projects/Gnosis/verify-on-etherscan/truffle-test-example/build/contracts/TwoContract.json",
+    "$PROJECT_DIR/truffle-test-example/build/contracts/ERC20.json",
+    "$PROJECT_DIR/truffle-test-example/build/contracts/ERC20Detailed.json",
+    "$PROJECT_DIR/truffle-test-example/build/contracts/IERC20.json",
+    "$PROJECT_DIR/truffle-test-example/build/contracts/Migrations.json",
+    "$PROJECT_DIR/truffle-test-example/build/contracts/OneContract.json",
+    "$PROJECT_DIR/truffle-test-example/build/contracts/SafeMath.json",
+    "$PROJECT_DIR/truffle-test-example/build/contracts/TestChildContract.json",
+    "$PROJECT_DIR/truffle-test-example/build/contracts/TestContract.json",
+    "$PROJECT_DIR/truffle-test-example/build/contracts/TestParentContract.json",
+    "$PROJECT_DIR/truffle-test-example/build/contracts/TestToken.json",
+    "$PROJECT_DIR/truffle-test-example/build/contracts/TwoContract.json",
   ],
+  "logger": Any<Object>,
   "network": "rinkeby",
   "networkId": 4,
   "optimizer": Object {

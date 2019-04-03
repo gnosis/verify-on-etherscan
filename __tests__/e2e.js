@@ -6,6 +6,33 @@ const { exec } = require('child_process');
 jest.mock('node-fetch');
 const fetch = require('node-fetch');
 
+const projectDir = new RegExp(process.cwd(), 'g');
+const replacement = '$PROJECT_DIR';
+const exclude = new Set(['web3', 'logger', 'bytecode', 'sourceCode']);
+
+const replaceCWD = val => {
+  const replace = original => {
+    if (typeof original === 'string') return original.replace(projectDir, replacement);
+
+    if (Array.isArray(original)) {
+      return original.map(replace);
+    }
+
+    if (typeof original === 'object' && original !== null) {
+      return Object.keys(original).reduce((accum, k) => {
+        if (exclude.has(k)) accum[k] = original[k];
+        else accum[k] = replace(original[k]);
+
+        return accum;
+      }, {});
+    }
+
+    return original;
+  };
+
+  return replace(val);
+};
+
 const fs = require('fs-extra');
 
 const { Response } = jest.requireActual('node-fetch');
@@ -106,9 +133,8 @@ describe('Process config', () => {
   test('plugin config', async () => {
     const options = await processPluginConfig(config);
 
-    expect(options).toMatchSnapshot({
-      web3: expect.any(Web3),
-      cwd: expect.stringMatching(/\/truffle-test-example$/)
+    expect(replaceCWD(options)).toMatchSnapshot({
+      web3: expect.any(Web3)
     });
   });
   test('plugin config without network throws', async () => {
@@ -131,10 +157,9 @@ describe('Process config', () => {
 
     expect(options.apiUrl).toEqual(apiUrl);
 
-    expect(options).toMatchSnapshot({
+    expect(replaceCWD(options)).toMatchSnapshot({
       web3: expect.any(Web3),
-      logger: expect.any(Object),
-      artifacts: expect.arrayContaining(stringMatches)
+      logger: expect.any(Object)
     });
   });
   test('working config with web3 connected to an unsupported network throws', async () => {
@@ -160,7 +185,7 @@ test('Gathers data from Artifacts', async () => {
     networkId: NETWORK_ID
   });
 
-  expect(artifactsData).toMatchSnapshot();
+  expect(replaceCWD(artifactsData)).toMatchSnapshot();
 });
 
 test('Filters out verified contracts', async () => {
@@ -188,7 +213,7 @@ test('Filters out verified contracts', async () => {
   const verified = all - unverified;
   expect(verified).toEqual(2);
 
-  expect(unverifiedContracts).toMatchSnapshot();
+  expect(replaceCWD(unverifiedContracts)).toMatchSnapshot();
   expect(logger.log.mock.calls).toMatchSnapshot();
 });
 
@@ -217,7 +242,7 @@ describe('Outputs Flattened', () => {
     expect(spies[0]).toHaveBeenCalledTimes(1);
     expect(spies[0]).toHaveBeenCalledWith(output);
 
-    expect(spies[1]).toMatchSnapshot();
+    expect(replaceCWD(spies[1].mock.calls)).toMatchSnapshot();
   });
   test('does nothing when flattenContracts is empty', async () => {
     await outputFlattened(artifactsData, {}, { output });
