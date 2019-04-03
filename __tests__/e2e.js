@@ -107,7 +107,8 @@ describe('Process config', () => {
     const options = await processPluginConfig(config);
 
     expect(options).toMatchSnapshot({
-      web3: expect.any(Web3)
+      web3: expect.any(Web3),
+      cwd: expect.stringMatching(/\/truffle-test-example$/)
     });
   });
   test('plugin config without network throws', async () => {
@@ -131,7 +132,9 @@ describe('Process config', () => {
     expect(options.apiUrl).toEqual(apiUrl);
 
     expect(options).toMatchSnapshot({
-      web3: expect.any(Web3)
+      web3: expect.any(Web3),
+      logger: expect.any(Object),
+      artifacts: expect.arrayContaining(stringMatches)
     });
   });
   test('working config with web3 connected to an unsupported network throws', async () => {
@@ -161,7 +164,9 @@ test('Gathers data from Artifacts', async () => {
 });
 
 test('Filters out verified contracts', async () => {
-  const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+  const logger = {
+    log: jest.fn()
+  };
 
   const verifiedResp = JSON.stringify({ status: '1' });
   const unverifiedResp = JSON.stringify({ status: '0' });
@@ -169,8 +174,12 @@ test('Filters out verified contracts', async () => {
     .mockReturnValueOnce(new Response(verifiedResp))
     .mockReturnValueOnce(new Response(verifiedResp))
     .mockImplementation(() => new Response(unverifiedResp));
+  logger.log
+    .mockReturnValueOnce(new Response(verifiedResp))
+    .mockReturnValueOnce(new Response(verifiedResp))
+    .mockImplementation(() => new Response(unverifiedResp));
 
-  const unverifiedContracts = await filterOutVerified(artifactsData, { apiUrl });
+  const unverifiedContracts = await filterOutVerified(artifactsData, { apiUrl, logger });
 
   expect(fetch).toMatchSnapshot();
 
@@ -180,9 +189,7 @@ test('Filters out verified contracts', async () => {
   expect(verified).toEqual(2);
 
   expect(unverifiedContracts).toMatchSnapshot();
-  expect(logSpy.mock.calls).toMatchSnapshot();
-
-  logSpy.mockRestore();
+  expect(logger.log.mock.calls).toMatchSnapshot();
 });
 
 let flattenedContracts;
@@ -264,20 +271,21 @@ test('Posts to verify', async () => {
     return new Response(JSON.stringify({ result: 'Verified' }));
   });
 
-  const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+  const logger = {
+    log: jest.fn()
+  };
 
   const promise = postToVerify(artifactsData, flattenedContracts, constructorData, {
     apiUrl,
     apiKey: '<your etherscan api key>',
     optimizer: { enabled: true, run: 200 },
     network: NETWORK_NAME,
-    delay: 0
+    delay: 0,
+    logger
   });
 
   await promise;
 
   expect(fetch).toMatchSnapshot();
-  expect(logSpy.mock.calls).toMatchSnapshot();
-
-  logSpy.mockRestore();
+  expect(logger.log.mock.calls).toMatchSnapshot();
 });
