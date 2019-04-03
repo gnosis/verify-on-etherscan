@@ -3,6 +3,7 @@
   "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": ["error"],
+    "no-unused-expressions": ["error", { "allowShortCircuit": true, "allowTernary": true }],
     "consistent-return": 0,
     "no-console": 0,
     "global-require": 0,
