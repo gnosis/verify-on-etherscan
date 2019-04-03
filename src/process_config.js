@@ -2,7 +2,17 @@ const Web3 = require('web3');
 const path = require('path');
 
 async function processPluginConfig(config) {
-  const { working_directory: cwd, network, o, output = o, compilers, useFetch, _ } = config;
+  const {
+    working_directory: cwd,
+    network,
+    o,
+    output = o,
+    compilers,
+    useFetch,
+    logger,
+    verbose,
+    _
+  } = config;
 
   const {
     settings: { optimizer }
@@ -32,7 +42,9 @@ async function processPluginConfig(config) {
     artifacts,
     apiKey: process.env.API_KEY,
     optimizer,
-    network
+    network,
+    logger,
+    verbose
   };
 }
 
@@ -55,7 +67,7 @@ const DEFAULT_OPTIMIZER_CONFIG = { enabled: false, runs: 200 };
 
 /**
  *
- * @param {cwd, artifacts, web3, optimizer, output, apiKey, network, delay?, useFetch?} options
+ * @param {cwd, artifacts, web3, optimizer, output, apiKey, network, delay?, useFetch?, logger?, verbose?} options
  */
 async function processConfig(options) {
   const { cwd = process.cwd(), artifacts, web3, network } = options;
@@ -86,14 +98,42 @@ async function processConfig(options) {
     etherscanNetwork === 'mainnet' ? '' : `-${etherscanNetwork}`
   }.etherscan.io/api`;
 
-  return {
+  const config = {
     optimizer: DEFAULT_OPTIMIZER_CONFIG,
+    logger: console,
     ...options,
     networkId,
     network: etherscanNetwork,
     artifacts: artifactsAbsPaths,
     apiUrl
   };
+
+  const { verbose, logger } = config;
+  if (verbose && logger) {
+    logger.log(
+      `\nUsing the following config:\n${JSON.stringify(
+        config,
+        [
+          'cwd',
+          'artifacts',
+          'optimizer',
+          'enabled',
+          'runs',
+          'output',
+          'network',
+          'delay',
+          'useFetch',
+          'verbose'
+        ],
+        2
+      )}`
+    );
+    logger.log(config.web3 ? 'web3 instance is provided' : 'web3 instance is not provided');
+    logger.log(config.apiKey ? 'apiKey is provided' : 'apiKey is not provided');
+    logger.log(config.logger === console ? 'using console as logger' : 'using a custom logger');
+  }
+
+  return config;
 }
 
 module.exports = {

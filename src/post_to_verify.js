@@ -18,13 +18,13 @@ async function postToVerify(
   artifactsData,
   flattenedContracts,
   constructorArguments,
-  { apiUrl, apiKey, optimizer, network, delay = 20000 }
+  { apiUrl, apiKey, optimizer, network, delay = 20000, logger, verbose }
 ) {
   const files = Object.keys(artifactsData);
-  console.log();
+  logger && logger.log();
 
   if (files.length === 0) {
-    console.log('All contracts already verified. Exiting...');
+    logger && logger.log('All contracts already verified. Exiting...');
     return;
   }
 
@@ -73,24 +73,49 @@ async function postToVerify(
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
       };
 
-      const res = await fetch(apiUrl, options);
       const { contractname, contractaddress } = contractData;
-
-      if (!res.ok) {
-        console.error(`Error sending request to verify ${contractname} at ${contractaddress}`);
-        console.error(res.status, res.statusText);
+      let res;
+      try {
+        res = await fetch(apiUrl, options);
+      } catch (error) {
+        logger &&
+          logger.error(
+            `Error sending verification request to ${contractAtEtherscanURL} for ${contractname} at ${contractaddress}: ${
+              error.message
+            }`
+          );
         return;
       }
 
-      const json = await res.json();
+      if (!res.ok) {
+        logger &&
+          logger.error(`Error sending request to verify ${contractname} at ${contractaddress}`);
+        logger && logger.error(res.status, res.statusText);
+        return;
+      }
+
+      let json;
+      try {
+        json = await res.json();
+      } catch (error) {
+        logger &&
+          logger.error(
+            `Error parsing verification response for ${contractname} at ${contractaddress}: ${
+              error.message
+            }`
+          );
+        return;
+      }
+
       if (json.status === '1') {
         const guid = json.result;
-        console.log(`Verification started for ${contractname} at ${contractaddress}`);
-        console.log('\tGUID: ', guid);
-        console.log(`Check progress at ${createCheckGUIDurl(guid)}\n`);
+        logger && logger.log(`Verification started for ${contractname} at ${contractaddress}`);
+        logger && logger.log('\tGUID: ', guid);
+        logger && logger.log(`Check progress at ${createCheckGUIDurl(guid)}\n`);
         return guid;
       }
-      console.log(`Error verifying ${contractname} at ${contractaddress}. ${json.result}\n`);
+      logger &&
+        logger.log(`Error verifying ${contractname} at ${contractaddress}. ${json.result}\n`);
     })
   );
 
@@ -103,13 +128,14 @@ async function postToVerify(
   }, {});
 
   const checkGUID = async guid => {
+    verbose && logger && logger.log(`Checking status of GUID ${guid}`);
     const res = await fetch(createCheckGUIDurl(guid));
 
     if (!res.ok) throw new Error(`Error fetching status of ${guid}`);
     return res.json();
   };
 
-  console.log();
+  logger && logger.log();
 
   const waitForGuid = async guid => {
     const { contractname, contractaddress } = GUIDinProgress2contract[guid];
@@ -118,16 +144,19 @@ async function postToVerify(
 
       // if result is not Pending, means it either failed or passed
       if (!json.result.includes('Pending')) {
-        console.log(`${contractname} at ${contractaddress}`, json.result);
+        logger && logger.log(`${contractname} at ${contractaddress}`, json.result);
         delete GUIDinProgress2contract[guid];
         if (json.status === '1' && json.result.includes('Verified')) {
-          console.log(
-            `View verified code at ${createContractCodeAtEthersacanURL(contractaddress)}`
-          );
+          logger &&
+            logger.log(
+              `View verified code at ${createContractCodeAtEthersacanURL(contractaddress)}`
+            );
         }
+      } else {
+        verbose && logger && logger.log(`${contractname} at ${contractaddress}`, json.result);
       }
     } catch (error) {
-      console.error(`${contractname} at ${contractaddress}`, error);
+      logger && logger.error(`${contractname} at ${contractaddress}`, error);
       delete GUIDinProgress2contract[guid];
     }
   };
@@ -135,6 +164,10 @@ async function postToVerify(
   let guids;
   // each 20 sec check for verification progress
   while ((guids = Object.keys(GUIDinProgress2contract)).length > 0) {
+    verbose &&
+      delay > 0 &&
+      logger &&
+      logger.log(`Waiting ${delay} ms before checking verification status`);
     /* eslint-disable no-await-in-loop */
     await delayMS(delay);
     await Promise.all(guids.map(waitForGuid));

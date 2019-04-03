@@ -109,6 +109,10 @@ const { argv } = require('yargs')
     describe:
       'delay (in ms) between checking if a contract has been verified after verification starts'
   })
+  .option('verbose', {
+    type: 'boolean',
+    describe: 'output more logs'
+  })
 
   .help('help')
   .alias('help', 'h')
@@ -126,22 +130,15 @@ const { argv } = require('yargs')
     process.exit(1);
   });
 
-// console.log('argv: ', argv);
-
 function run(options) {
-  const { network, optimize, optimizeRuns, output, delay, artifacts } = options;
-  // console.log('network: ', network);
-  // console.log('optimize: ', optimize);
-  // console.log('optimizeRuns: ', optimizeRuns);
-  // console.log('output: ', output);
-  // console.log('delay: ', delay, typeof delay);
+  const { network, optimize, optimizeRuns, output, delay, artifacts, verbose } = options;
 
   let optimizer;
   if (optimize === undefined && optimizeRuns === undefined) {
     optimizer = getOptimizerFromTruffleConfig();
+    optimizer && verbose && console.log(`Optimizer settings inferred from local truffle config`);
   }
   if (!optimizer) optimizer = constructOptimizerFromOptions(options);
-  // console.log('optimizer: ', optimizer);
 
   require('../src')({
     network,
@@ -149,6 +146,7 @@ function run(options) {
     output,
     delay,
     artifacts,
+    verbose,
     apiKey: process.env.API_KEY
   }).catch(console.error);
 }

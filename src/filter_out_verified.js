@@ -1,8 +1,8 @@
 const fetch = require('node-fetch');
 
-async function filterOutVerified(artifactsData, { apiUrl }) {
+async function filterOutVerified(artifactsData, { apiUrl, logger, verbose }) {
   const files = Object.keys(artifactsData);
-  console.log();
+  logger && logger.log();
 
   const verifiedContracts = await Promise.all(
     files.map(async f => {
@@ -12,10 +12,16 @@ async function filterOutVerified(artifactsData, { apiUrl }) {
       try {
         const json = await res.json();
         if (json.status === '1') {
-          console.log(`${contractname} at ${contractaddress} is already verified, skipping`);
+          logger &&
+            logger.log(`${contractname} at ${contractaddress} is already verified, skipping`);
           return true;
         }
       } catch (error) {
+        verbose &&
+          logger &&
+          logger.error(
+            `Error checking if ${contractname} at ${contractaddress} is verified: ${error.message}`
+          );
         return false;
       }
 

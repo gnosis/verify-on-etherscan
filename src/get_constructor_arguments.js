@@ -1,6 +1,9 @@
 const fetch = require('node-fetch');
 
-async function getConstructorArguments(artifactsData, { web3, apiUrl, network, useFetch }) {
+async function getConstructorArguments(
+  artifactsData,
+  { web3, apiUrl, network, useFetch, logger, verbose }
+) {
   const files = Object.keys(artifactsData);
 
   const etherscanURL = `${network === 'mainnet' ? '' : `${network}.`}etherscan.io`;
@@ -15,45 +18,62 @@ async function getConstructorArguments(artifactsData, { web3, apiUrl, network, u
 
           const json = await res.json();
 
-          if (json.result === null) {
-            throw new Error(`No transaction with hash ${txhash} found on ${etherscanURL}`);
-          }
-
           if (json.error) {
             throw new Error(
               `Error getting transaction ${txhash} from ${etherscanURL}:
-            ${json.error.code}: ${json.error.message}
-            `
+              ${json.error.code}: ${json.error.message}
+              `
             );
           }
+
+          if (json.result === null) {
+            logger && logger.error(`No transaction with hash ${txhash} found on ${etherscanURL}`);
+          }
+
           return json.result;
         };
 
   const constructorArgumentsEncoded = await Promise.all(
     files.map(async f => {
-      const { txhash, bytecode, contractname, hasNonEmptyConstructor } = artifactsData[f];
+      const {
+        txhash,
+        bytecode,
+        contractname,
+        hasNonEmptyConstructor,
+        contractaddress
+      } = artifactsData[f];
 
       if (!hasNonEmptyConstructor) return;
 
-      const tx = await getTransaction(txhash);
-      if (tx === null) {
-        console.error(
-          `Transaction ${txhash} from ${contractname} wasn't found on the blockchain. Verification will fail.`
-        );
-        return;
-      }
+      try {
+        const tx = await getTransaction(txhash);
+        if (tx === null) {
+          logger &&
+            logger.error(
+              `Transaction ${txhash} from ${contractname} wasn't found on the blockchain. Verification will fail.`
+            );
+          return;
+        }
 
-      if (!tx.input.startsWith(bytecode)) {
-        console.log('tx.input: ', tx.input);
-        console.log('bytecode: ', bytecode);
-        console.error(
-          `${contractname} bytecode doesn't match creating tx's input. Verification will fail.`
-        );
-        return;
-      }
-      const constructorArgs = tx.input.replace(bytecode, '');
+        if (!tx.input.startsWith(bytecode)) {
+          logger &&
+            logger.error(
+              `${contractname} bytecode doesn't match creating tx's input. Verification will fail.`
+            );
+          return;
+        }
+        const constructorArgs = tx.input.replace(bytecode, '');
 
-      return constructorArgs;
+        verbose &&
+          logger &&
+          logger.log(
+            `${contractname} at ${contractaddress} was deployed with constructor arguments: ${constructorArgs}`
+          );
+
+        return constructorArgs;
+      } catch (error) {
+        logger && logger.error(error);
+      }
     })
   );
 

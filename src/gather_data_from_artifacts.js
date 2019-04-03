@@ -1,6 +1,6 @@
 const fs = require('fs-extra');
 
-async function gatherDataFromArtifacts({ artifacts, networkId }) {
+async function gatherDataFromArtifacts({ artifacts, networkId, logger }) {
   const artifactJSONs = await Promise.all(artifacts.map(f => fs.readJson(f)));
 
   const result = {};
@@ -19,9 +19,10 @@ async function gatherDataFromArtifacts({ artifacts, networkId }) {
 
     const match = /[\w.+-]+?commit\.[\da-f]+/i.exec(compiler.version);
     if (match === null) {
-      console.error(
-        `${file} doesn't contain a valid compiler version: ${compiler.version}, skipping`
-      );
+      logger &&
+        logger.error(
+          `${file} doesn't contain a valid compiler version: ${compiler.version}, skipping`
+        );
       continue;
     }
     const versionfromArtifact = match[0];
@@ -45,8 +46,12 @@ async function gatherDataFromArtifacts({ artifacts, networkId }) {
 
     if (librariesUsed.length) {
       if (librariesUsed.length > 10) {
-        console.error('\nEtherscan only allows verification of contracts with up to 10 libraries;');
-        console.error(contractname, 'has', librariesUsed.length, "and won't be verrified\n");
+        logger &&
+          logger.error(
+            '\nEtherscan only allows verification of contracts with up to 10 libraries;'
+          );
+        logger &&
+          logger.error(contractname, 'has', librariesUsed.length, "and won't be verrified\n");
         continue;
       }
 
