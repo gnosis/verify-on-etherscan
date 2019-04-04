@@ -1,5 +1,10 @@
 const fetch = require('node-fetch');
 
+// .....contract_code......metadata_start.........metadata_end(constructor_args)
+const metaNconstructorR = /a165627a7a72305820[0-9A-Fa-f]+?0029([0-9A-Fa-f]*)$/;
+
+const checkConstructorArgsValidity = constArgs => constArgs && constArgs.length % 64 === 0;
+
 async function getConstructorArguments(
   artifactsData,
   { web3, apiUrl, network, useFetch, logger, verbose }
@@ -55,20 +60,35 @@ async function getConstructorArguments(
           return;
         }
 
+        let constructorArgs;
+        let validConstructorArgs = false;
+
         if (!tx.input.startsWith(bytecode)) {
           logger &&
             logger.error(
-              `${contractname} bytecode doesn't match creating tx's input. Verification will fail.`
+              `${contractname} bytecode doesn't match creating tx's input. Verification may fail.`
             );
-          return;
-        }
-        const constructorArgs = tx.input.replace(bytecode, '');
 
-        verbose &&
+          [, constructorArgs] = tx.input.match(metaNconstructorR);
+
+          validConstructorArgs = checkConstructorArgsValidity(constructorArgs);
+        } else {
+          constructorArgs = tx.input.replace(bytecode, '');
+          validConstructorArgs = checkConstructorArgsValidity(constructorArgs);
+        }
+
+        if (validConstructorArgs) {
+          verbose &&
+            logger &&
+            logger.log(
+              `${contractname} at ${contractaddress} was deployed with constructor arguments: ${constructorArgs}`
+            );
+        } else {
           logger &&
-          logger.log(
-            `${contractname} at ${contractaddress} was deployed with constructor arguments: ${constructorArgs}`
-          );
+            logger.error(
+              `Unable to infer valid constructor arguments from ${contractname} creating tx ${txhash}. Verification will fail.`
+            );
+        }
 
         return constructorArgs;
       } catch (error) {
