@@ -2852,6 +2852,7 @@ Object {
     "build/contracts/TwoContract.json",
   ],
   "cwd": "$PROJECT_DIR/truffle-test-example",
+  "delay": undefined,
   "logger": undefined,
   "network": "rinkeby",
   "optimizer": undefined,
