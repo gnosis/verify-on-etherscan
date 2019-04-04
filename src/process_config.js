@@ -11,6 +11,8 @@ async function processPluginConfig(config) {
     useFetch,
     logger,
     verbose,
+    d,
+    delay = d,
     _
   } = config;
 
@@ -44,7 +46,8 @@ async function processPluginConfig(config) {
     optimizer,
     network,
     logger,
-    verbose
+    verbose,
+    delay
   };
 }
 
