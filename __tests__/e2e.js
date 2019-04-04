@@ -10,6 +10,8 @@ const projectDir = new RegExp(process.cwd(), 'g');
 const replacement = '$PROJECT_DIR';
 const exclude = new Set(['web3', 'logger', 'bytecode', 'sourceCode']);
 
+const hexR = /^0x[0-9a-fA-F]+$/;
+
 const replaceCWD = val => {
   const replace = original => {
     if (typeof original === 'string') return original.replace(projectDir, replacement);
@@ -133,9 +135,12 @@ describe('Process config', () => {
   test('plugin config', async () => {
     const options = await processPluginConfig(config);
 
-    expect(replaceCWD(options)).toMatchSnapshot({
-      web3: expect.any(Web3)
-    });
+    expect(replaceCWD(options)).toMatchSnapshot(
+      {
+        web3: expect.any(Web3)
+      },
+      'Plugin config'
+    );
   });
   test('plugin config without network throws', async () => {
     expect(processPluginConfig({ ...config, network: undefined })).rejects.toThrow(
@@ -157,10 +162,13 @@ describe('Process config', () => {
 
     expect(options.apiUrl).toEqual(apiUrl);
 
-    expect(replaceCWD(options)).toMatchSnapshot({
-      web3: expect.any(Web3),
-      logger: expect.any(Object)
-    });
+    expect(replaceCWD(options)).toMatchSnapshot(
+      {
+        web3: expect.any(Web3),
+        logger: expect.any(Object)
+      },
+      'Lib config'
+    );
   });
   test('working config with web3 connected to an unsupported network throws', async () => {
     const unavailableId = 12345;
@@ -185,7 +193,19 @@ test('Gathers data from Artifacts', async () => {
     networkId: NETWORK_ID
   });
 
-  expect(replaceCWD(artifactsData)).toMatchSnapshot();
+  const artifactKeys = Object.keys(artifactsData);
+
+  expect(artifactKeys).toMatchSnapshot('Artifact paths');
+
+  artifactKeys.forEach(key => {
+    expect(replaceCWD(artifactsData[key])).toMatchSnapshot(
+      {
+        bytecode: expect.any(String),
+        txhash: expect.stringMatching(hexR)
+      },
+      path.basename(key)
+    );
+  });
 });
 
 test('Filters out verified contracts', async () => {
@@ -206,22 +226,33 @@ test('Filters out verified contracts', async () => {
 
   const unverifiedContracts = await filterOutVerified(artifactsData, { apiUrl, logger });
 
-  expect(fetch).toMatchSnapshot();
+  expect(fetch).toMatchSnapshot('Fetch calls');
 
   const all = Object.keys(artifactsData).length;
-  const unverified = Object.keys(unverifiedContracts).length;
-  const verified = all - unverified;
+  const unverifiedKeys = Object.keys(unverifiedContracts);
+  const verified = all - unverifiedKeys.length;
   expect(verified).toEqual(2);
 
-  expect(replaceCWD(unverifiedContracts)).toMatchSnapshot();
-  expect(logger.log.mock.calls).toMatchSnapshot();
+  expect(unverifiedKeys).toMatchSnapshot('Unverified contracts');
+
+  unverifiedKeys.forEach(key => {
+    expect(replaceCWD(unverifiedContracts[key])).toMatchSnapshot(
+      {
+        bytecode: expect.any(String),
+        txhash: expect.stringMatching(hexR)
+      },
+      path.basename(key)
+    );
+  });
+
+  expect(logger.log.mock.calls).toMatchSnapshot('Log calls');
 });
 
 let flattenedContracts;
 test('Flattens contracts linked from artifacts', async () => {
   flattenedContracts = await flattenContracts(artifactsData);
 
-  expect(flattenedContracts).toMatchSnapshot();
+  expect(flattenedContracts).toMatchSnapshot('Flattened contracts');
 });
 
 describe('Outputs Flattened', () => {
@@ -242,7 +273,7 @@ describe('Outputs Flattened', () => {
     expect(spies[0]).toHaveBeenCalledTimes(1);
     expect(spies[0]).toHaveBeenCalledWith(output);
 
-    expect(replaceCWD(spies[1].mock.calls)).toMatchSnapshot();
+    expect(replaceCWD(spies[1].mock.calls)).toMatchSnapshot('fs.writeFile calls');
   });
   test('does nothing when flattenContracts is empty', async () => {
     await outputFlattened(artifactsData, {}, { output });
@@ -259,7 +290,7 @@ test('Gathers constructor arguments for relevant contracts', async () => {
     web3
   });
 
-  expect(constructorData).toMatchSnapshot();
+  expect(constructorData).toMatchSnapshot('Constructor arguments');
 
   const filesWithConstructors = Object.keys(constructorData);
 
@@ -279,7 +310,7 @@ test('Gathers constructor arguments for relevant contracts', async () => {
     return accum;
   }, {});
 
-  expect(constructorDataDecoded).toMatchSnapshot();
+  expect(constructorDataDecoded).toMatchSnapshot('Decoded constructor arguments');
 });
 
 test('Posts to verify', async () => {
@@ -311,6 +342,6 @@ test('Posts to verify', async () => {
 
   await promise;
 
-  expect(fetch).toMatchSnapshot();
-  expect(logger.log.mock.calls).toMatchSnapshot();
+  expect(fetch).toMatchSnapshot('Fetch calls');
+  expect(logger.log.mock.calls).toMatchSnapshot('Log calls');
 });
