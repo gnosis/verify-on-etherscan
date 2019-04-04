@@ -10,7 +10,7 @@ const verify = require('./index');
 const printHelp = require('./print_help');
 
 module.exports = async config => {
-  if (config.help) {
+  if (config.help || config.h) {
     printHelp();
     return;
   }

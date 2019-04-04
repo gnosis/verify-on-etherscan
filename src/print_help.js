@@ -18,6 +18,8 @@ Usage: API_KEY=<your key> truffle run verify [options] [artifact_paths ...]
                         
     --verbose           output more logs (optional)
 
+    --help, -h          output more logs (optional)
+
     artifact_paths      a space separated list of paths to artifact json files (required)
                         or a glob pattern like ./build/contracts/*.json
                         
