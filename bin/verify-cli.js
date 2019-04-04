@@ -2,7 +2,7 @@
 
 const path = require('path');
 
-const {availableNetworks, DEFAULT_OPTIMIZER_CONFIG} = require('../src/process_config')
+const { availableNetworks, DEFAULT_OPTIMIZER_CONFIG } = require('../src/process_config');
 
 const constructOptimizerFromOptions = ({ optimize, optimizeRuns }) => {
   const enabled = !!optimize || !!optimizeRuns;
@@ -84,14 +84,15 @@ const { argv } = require('yargs')
 
   .option('network', {
     demandOption: true,
-    choices: ,
+    choices: availableNetworks,
     type: 'string',
     describe: 'which network to verify contracts on'
   })
   .option('optimize', {
     alias: 'o',
     type: 'boolean',
-    describe: 'whether your contracts were optimized during compilation (sets --optimize-runs to 200 if none given)'
+    describe:
+      'whether your contracts were optimized during compilation (sets --optimize-runs to 200 if none given)'
   })
   .option('optimize-runs', {
     alias: 'r',
@@ -110,6 +111,12 @@ const { argv } = require('yargs')
     default: 20000,
     describe:
       'delay (in ms) between checking if a contract has been verified after verification starts'
+  })
+  .option('use-fetch', {
+    type: 'boolean',
+    default: true,
+    describe:
+      'fetch transactions from etherscan.io instead of from blockchain when determining constructor arguments'
   })
   .option('verbose', {
     type: 'boolean',
@@ -133,7 +140,7 @@ const { argv } = require('yargs')
   });
 
 function run(options) {
-  const { network, optimize, optimizeRuns, output, delay, artifacts, verbose } = options;
+  const { network, optimize, optimizeRuns, output, delay, artifacts, verbose, useFetch } = options;
 
   let optimizer;
   // no flags provided
@@ -147,7 +154,7 @@ function run(options) {
       console.log(`Will use defaults: ${JSON.stringify(DEFAULT_OPTIMIZER_CONFIG)}`);
       console.log('If that is not correct, provide --optimize and/or --optimize-runs flags');
 
-      optimizer = DEFAULT_OPTIMIZER_CONFIG
+      optimizer = DEFAULT_OPTIMIZER_CONFIG;
     }
   } else optimizer = constructOptimizerFromOptions(options);
 
@@ -158,6 +165,7 @@ function run(options) {
     delay,
     artifacts,
     verbose,
+    useFetch,
     apiKey: process.env.API_KEY
   }).catch(console.error);
 }

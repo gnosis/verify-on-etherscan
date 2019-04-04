@@ -66,6 +66,21 @@ const Network2Id = Object.keys(id2Network).reduce((accum, id) => {
   return accum;
 }, {});
 
+// readonly
+const network2InfuraURL = {
+  mainnet: 'https://mainnet.infura.io',
+  ropsten: 'https://ropsten.infura.io',
+  rinkeby: 'https://rinkeby.infura.io',
+  kovan: 'https://kovan.infura.io'
+};
+
+const createWeb3Instance = network => {
+  const url = network2InfuraURL[network];
+  if (!url) throw new Error(`No network url for ${network} network`);
+
+  return new Web3(url);
+};
+
 const DEFAULT_OPTIMIZER_CONFIG = { enabled: false, runs: 200 };
 
 /**
@@ -73,12 +88,15 @@ const DEFAULT_OPTIMIZER_CONFIG = { enabled: false, runs: 200 };
  * @param {cwd, artifacts, web3, optimizer, output, apiKey, network, delay?, useFetch?, logger?, verbose?} options
  */
 async function processConfig(options) {
-  const { cwd = process.cwd(), artifacts, web3, network } = options;
+  const { cwd = process.cwd(), artifacts, network, useFetch } = options;
+
+  let { web3 } = options;
 
   const artifactsAbsPaths = artifacts.map(f => path.resolve(cwd, f));
 
   let etherscanNetwork;
   let networkId;
+  let web3WasCreated = false;
   if (web3) {
     networkId = await web3.eth.net.getId();
 
@@ -95,6 +113,11 @@ async function processConfig(options) {
     }
     etherscanNetwork = network;
     networkId = Network2Id[network];
+
+    if (!useFetch) {
+      web3 = createWeb3Instance(network);
+      web3WasCreated = true;
+    }
   }
 
   const apiUrl = `https://api${
@@ -104,6 +127,7 @@ async function processConfig(options) {
   const config = {
     optimizer: DEFAULT_OPTIMIZER_CONFIG,
     logger: console,
+    web3,
     ...options,
     networkId,
     network: etherscanNetwork,
@@ -131,7 +155,11 @@ async function processConfig(options) {
         2
       )}`
     );
-    logger.log(config.web3 ? 'web3 instance is provided' : 'web3 instance is not provided');
+    if (web3WasCreated) {
+      logger.log('web3 instance was created');
+    } else {
+      logger.log(config.web3 ? 'web3 instance is provided' : 'web3 instance is not provided');
+    }
     logger.log(config.apiKey ? 'apiKey is provided' : 'apiKey is not provided');
     logger.log(config.logger === console ? 'using console as logger' : 'using a custom logger');
   }
