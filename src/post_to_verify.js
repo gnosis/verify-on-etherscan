@@ -128,7 +128,7 @@ async function postToVerify(
   }, {});
 
   const checkGUID = async guid => {
-    verbose && logger && logger.log(`Checking status of GUID ${guid}`);
+    verbose && logger && logger.log(`\nChecking status of GUID ${guid}`);
     const res = await fetch(createCheckGUIDurl(guid));
 
     if (!res.ok) throw new Error(`Error fetching status of ${guid}`);
@@ -149,7 +149,7 @@ async function postToVerify(
         if (json.status === '1' && json.result.includes('Verified')) {
           logger &&
             logger.log(
-              `View verified code at ${createContractCodeAtEthersacanURL(contractaddress)}`
+              `View verified code at ${createContractCodeAtEthersacanURL(contractaddress)}\n`
             );
         }
       } else {
@@ -167,7 +167,7 @@ async function postToVerify(
     verbose &&
       delay > 0 &&
       logger &&
-      logger.log(`Waiting ${delay} ms before checking verification status`);
+      logger.log(`\nWaiting ${delay} ms before checking verification status\n`);
     /* eslint-disable no-await-in-loop */
     await delayMS(delay);
     await Promise.all(guids.map(waitForGuid));
