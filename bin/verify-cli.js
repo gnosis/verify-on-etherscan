@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const path = require('path');
+const yargs = require('yargs');
 
 const { availableNetworks, DEFAULT_OPTIMIZER_CONFIG } = require('../src/process_config');
 
@@ -62,83 +63,6 @@ const getOptimizerFromTruffleConfig = () => {
   );
 };
 
-const { argv } = require('yargs')
-  .version()
-  .usage('$0 <artifacts...>', 'Verifies contracts on etherscan.io', yargs => {
-    yargs
-      .positional('artifacts', {
-        describe: 'paths to json artifacts or a glob pattern',
-        type: 'string'
-      })
-      .example(
-        '$0 --network rinkeby ./build/contracts/*',
-        `Verifies all contract artifacts in ./build/contracts deployed to rinkeby network.
-        Tries to infer optimizer settings from truffle.js or truffle-config.js`
-      )
-      .example(
-        '$0 --network rinkeby ./build/contracts/* --optimize-runs 100',
-        `Verifies all contract artifacts in ./build/contracts deployed to rinkeby network.
-        Optimizer is set as { enabled: true, runs: 100}`
-      );
-  })
-
-  .option('network', {
-    demandOption: true,
-    choices: availableNetworks,
-    type: 'string',
-    describe: 'which network to verify contracts on'
-  })
-  .option('optimize', {
-    alias: 'o',
-    type: 'boolean',
-    describe:
-      'whether your contracts were optimized during compilation (sets --optimize-runs to 200 if none given)'
-  })
-  .option('optimize-runs', {
-    alias: 'r',
-    type: 'number',
-    describe:
-      'how many runs your contracts were optimized for during compilation (sets --optimize to true if given)'
-  })
-  .option('output', {
-    alias: 'o',
-    type: 'string',
-    describe: 'which directory to output flattened contracts to'
-  })
-  .option('delay', {
-    alias: 'd',
-    type: 'number',
-    default: 20000,
-    describe:
-      'delay (in ms) between checking if a contract has been verified after verification starts'
-  })
-  .option('use-fetch', {
-    type: 'boolean',
-    default: true,
-    describe:
-      'fetch transactions from etherscan.io instead of from blockchain when determining constructor arguments'
-  })
-  .option('verbose', {
-    type: 'boolean',
-    describe: 'output more logs'
-  })
-
-  .help('help')
-  .alias('help', 'h')
-  .alias('version', 'v')
-  .fail((msg, err, yargs) => {
-    if (err) throw err; // preserve stack
-
-    if (msg === 'Not enough non-option arguments: got 0, need at least 1') {
-      console.error('Must provide artifact paths');
-    } else {
-      console.error(msg);
-    }
-    console.error('\nSee usage:');
-    console.error(yargs.help());
-    process.exit(1);
-  });
-
 function run(options) {
   const { network, optimize, optimizeRuns, output, delay, artifacts, verbose, useFetch } = options;
 
@@ -170,4 +94,88 @@ function run(options) {
   }).catch(console.error);
 }
 
-run(argv);
+function main() {
+  const { argv } = yargs
+    .version()
+    .usage('$0 <artifacts...>', 'Verifies contracts on etherscan.io', yarg => {
+      yarg
+        .positional('artifacts', {
+          describe: 'paths to json artifacts or a glob pattern',
+          type: 'string'
+        })
+        .example(
+          '$0 --network rinkeby ./build/contracts/*',
+          `Verifies all contract artifacts in ./build/contracts deployed to rinkeby network.
+          Tries to infer optimizer settings from truffle.js or truffle-config.js`
+        )
+        .example(
+          '$0 --network rinkeby ./build/contracts/* --optimize-runs 100',
+          `Verifies all contract artifacts in ./build/contracts deployed to rinkeby network.
+          Optimizer is set as { enabled: true, runs: 100}`
+        );
+    })
+
+    .option('network', {
+      demandOption: true,
+      choices: availableNetworks,
+      type: 'string',
+      describe: 'which network to verify contracts on'
+    })
+    .option('optimize', {
+      alias: 'o',
+      type: 'boolean',
+      describe:
+        'whether your contracts were optimized during compilation (sets --optimize-runs to 200 if none given)'
+    })
+    .option('optimize-runs', {
+      alias: 'r',
+      type: 'number',
+      describe:
+        'how many runs your contracts were optimized for during compilation (sets --optimize to true if given)'
+    })
+    .option('output', {
+      alias: 'o',
+      type: 'string',
+      describe: 'which directory to output flattened contracts to'
+    })
+    .option('delay', {
+      alias: 'd',
+      type: 'number',
+      default: 20000,
+      describe:
+        'delay (in ms) between checking if a contract has been verified after verification starts'
+    })
+    .option('use-fetch', {
+      type: 'boolean',
+      default: true,
+      describe:
+        'fetch transactions from etherscan.io instead of from blockchain when determining constructor arguments'
+    })
+    .option('verbose', {
+      type: 'boolean',
+      describe: 'output more logs'
+    })
+
+    .help('help')
+    .alias('help', 'h')
+    .alias('version', 'v')
+    .fail((msg, err, yarg) => {
+      if (err) throw err; // preserve stack
+
+      if (msg === 'Not enough non-option arguments: got 0, need at least 1') {
+        console.error('Must provide artifact paths');
+      } else {
+        console.error(msg);
+      }
+      console.error('\nSee usage:');
+      console.error(yarg.help());
+      process.exit(1);
+    });
+
+  run(argv);
+}
+
+// if running directly
+if (require.main === module) {
+  main();
+}
