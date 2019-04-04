@@ -104,12 +104,12 @@ function main() {
           type: 'string'
         })
         .example(
-          '$0 --network rinkeby ./build/contracts/*',
+          'API_KEY=<your_key> $0 --network rinkeby ./build/contracts/*',
           `Verifies all contract artifacts in ./build/contracts deployed to rinkeby network.
           Tries to infer optimizer settings from truffle.js or truffle-config.js`
         )
         .example(
-          '$0 --network rinkeby ./build/contracts/* --optimize-runs 100',
+          'API_KEY=<your_key> $0 --network rinkeby ./build/contracts/* --optimize-runs 100',
           `Verifies all contract artifacts in ./build/contracts deployed to rinkeby network.
           Optimizer is set as { enabled: true, runs: 100}`
         );

@@ -1,5 +1,5 @@
 const helpMessage = `
-Usage: API_KEY=<your key> truffle run verify [options] [artifact_paths ...]
+Usage: API_KEY=<your_key> truffle run verify [options] <artifact_paths ...>
     API_KEY             your key for etherscan.io API (required)
 
     --network <name>    network from truffle.js file (required)
