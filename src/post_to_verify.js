@@ -32,7 +32,7 @@ async function postToVerify(
     throw new Error("No API_KEY provided, can't verify");
   }
 
-  const { enabled: optimizationUsed = true, runs = 200 } = optimizer;
+  const { enabled: optimizationUsed = false, runs = 200 } = optimizer;
 
   const defaultBody = {
     apikey: apiKey,

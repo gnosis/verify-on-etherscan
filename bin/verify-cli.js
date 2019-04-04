@@ -2,6 +2,8 @@
 
 const path = require('path');
 
+const {availableNetworks, DEFAULT_OPTIMIZER_CONFIG} = require('../src/process_config')
+
 const constructOptimizerFromOptions = ({ optimize, optimizeRuns }) => {
   const enabled = !!optimize || !!optimizeRuns;
 
@@ -82,14 +84,14 @@ const { argv } = require('yargs')
 
   .option('network', {
     demandOption: true,
-    choices: require('../src/process_config').availableNetworks,
+    choices: ,
     type: 'string',
     describe: 'which network to verify contracts on'
   })
   .option('optimize', {
     alias: 'o',
     type: 'boolean',
-    describe: 'whether your contracts were optimized during compilation'
+    describe: 'whether your contracts were optimized during compilation (sets --optimize-runs to 200 if none given)'
   })
   .option('optimize-runs', {
     alias: 'r',
@@ -134,11 +136,20 @@ function run(options) {
   const { network, optimize, optimizeRuns, output, delay, artifacts, verbose } = options;
 
   let optimizer;
+  // no flags provided
   if (optimize === undefined && optimizeRuns === undefined) {
+    // try to get from ./truffle(-config)?.js
     optimizer = getOptimizerFromTruffleConfig();
     optimizer && verbose && console.log(`Optimizer settings inferred from local truffle config`);
-  }
-  if (!optimizer) optimizer = constructOptimizerFromOptions(options);
+    // couldn't
+    if (!optimizer) {
+      console.log('Was unable to infer optimizer settings from local truffle config');
+      console.log(`Will use defaults: ${JSON.stringify(DEFAULT_OPTIMIZER_CONFIG)}`);
+      console.log('If that is not correct, provide --optimize and/or --optimize-runs flags');
+
+      optimizer = DEFAULT_OPTIMIZER_CONFIG
+    }
+  } else optimizer = constructOptimizerFromOptions(options);
 
   require('../src')({
     network,

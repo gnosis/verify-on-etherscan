@@ -142,5 +142,6 @@ async function processConfig(options) {
 module.exports = {
   processPluginConfig,
   processConfig,
-  availableNetworks
+  availableNetworks,
+  DEFAULT_OPTIMIZER_CONFIG
 };
