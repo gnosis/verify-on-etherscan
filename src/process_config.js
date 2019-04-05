@@ -85,7 +85,7 @@ const DEFAULT_OPTIMIZER_CONFIG = { enabled: false, runs: 200 };
 
 /**
  *
- * @param {cwd, artifacts, web3, optimizer, output, apiKey, network, delay?, useFetch?, logger?, verbose?} options
+ * @param {cwd?, artifacts, web3?, optimizer?, output?, apiKey, network?, delay?, useFetch?, logger?, verbose?} options
  */
 async function processConfig(options) {
   const { cwd = process.cwd(), artifacts, network, useFetch } = options;

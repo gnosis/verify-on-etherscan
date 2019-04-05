@@ -100,7 +100,8 @@ function main() {
     .usage('$0 <artifacts...>', 'Verifies contracts on etherscan.io', yarg => {
       yarg
         .positional('artifacts', {
-          describe: 'paths to json artifacts or a glob pattern',
+          describe:
+            'a space separated list of paths to artifact json files (required) or a glob pattern like ./build/contracts/*.json',
           type: 'string'
         })
         .example(
@@ -136,7 +137,7 @@ function main() {
     .option('output', {
       alias: 'o',
       type: 'string',
-      describe: 'which directory to output flattened contracts to'
+      describe: 'which directory to write flattened contracts to'
     })
     .option('delay', {
       alias: 'd',
@@ -159,6 +160,7 @@ function main() {
     .help('help')
     .alias('help', 'h')
     .alias('version', 'v')
+    .wrap(yargs.terminalWidth())
     .fail((msg, err, yarg) => {
       if (err) throw err; // preserve stack
 
