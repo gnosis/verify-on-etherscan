@@ -9,5 +9,6 @@ before_install:
   - rm -rf node_modules
 install:
   - npm ci --production=false
+  - npm run prep-test
 script:
   - npm run lint && npm test

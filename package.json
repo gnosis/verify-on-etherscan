@@ -20,6 +20,7 @@
   "scripts": {
     "lint": "eslint '**/*.js' --ignore-path .gitignore",
     "format": "prettier --write '**/*.js'",
+    "prep-test": "cd ./truffle-test-example && npm install && cd ..",
     "test": "jest"
   },
   "author": "Velenir",
