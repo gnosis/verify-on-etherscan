@@ -1,7 +1,7 @@
 {
   "name": "verify-on-etherscan",
   "version": "1.0.0-beta.0",
-  "description": "Automates verification on etherscan.io of ethereum contracts that were deployed with truffle",
+  "description": "Automates verification on etherscan.io of ethereum contracts that were compiled and deployed with truffle",
   "keywords": [
     "verify",
     "ethereum",
@@ -14,6 +14,9 @@
     "verify-on-etherscan": "bin/verify-cli.js",
     "voeth": "bin/verify-cli.js"
   },
+  "files": [
+    "src/**/*"
+  ],
   "scripts": {
     "lint": "eslint '**/*.js' --ignore-path .gitignore",
     "format": "prettier --write '**/*.js'",
@@ -41,5 +44,12 @@
     "ganache-cli": "6.4.1",
     "jest": "^24.7.1",
     "prettier": "^1.16.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gnosis/verify-on-etherscan.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gnosis/verify-on-etherscan/issues"
   }
 }
