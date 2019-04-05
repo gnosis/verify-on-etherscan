@@ -3,6 +3,14 @@ const fetch = require('node-fetch');
 // .....contract_code......metadata_start.........metadata_end(constructor_args)
 const metaNconstructorR = /a165627a7a72305820[0-9A-Fa-f]+?0029([0-9A-Fa-f]*)$/;
 
+const extractConstructorCodes = data => {
+  if (!data) return null;
+
+  const match = data.match(metaNconstructorR);
+
+  return match && match[1];
+};
+
 const checkConstructorArgsValidity = constArgs => constArgs && constArgs.length % 64 === 0;
 
 async function getConstructorArguments(
@@ -69,7 +77,7 @@ async function getConstructorArguments(
               `${contractname} bytecode doesn't match creating tx's input. Verification may fail.`
             );
 
-          [, constructorArgs] = tx.input.match(metaNconstructorR);
+          constructorArgs = extractConstructorCodes(tx.input);
 
           validConstructorArgs = checkConstructorArgsValidity(constructorArgs);
         } else {
