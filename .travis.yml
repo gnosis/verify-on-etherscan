@@ -1,0 +1,13 @@
+dist: trusty
+language: node_js
+node_js:
+  - '10'
+cache:
+  directories:
+    - '$HOME/.npm'
+before_install:
+  - rm -rf node_modules
+install:
+  - npm ci --production=false
+script:
+  - npm run lint && npm test
