@@ -110,8 +110,8 @@ function main() {
           Tries to infer optimizer settings from truffle.js or truffle-config.js`
         )
         .example(
-          'API_KEY=<your_key> $0 --network rinkeby ./build/contracts/* --optimize-runs 100',
-          `Verifies all contract artifacts in ./build/contracts deployed to rinkeby network.
+          'API_KEY=<your_key> $0 --network rinkeby ./build/contracts/Contract.json --optimize-runs 100',
+          `Verifies ./build/contracts/Contract.json artifact deployed to rinkeby network.
           Optimizer is set as { enabled: true, runs: 100}`
         );
     })

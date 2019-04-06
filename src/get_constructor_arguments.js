@@ -11,6 +11,9 @@ const extractConstructorCodes = data => {
   return match && match[1];
 };
 
+// constructor bytecode is a sequence of 32-bytes
+// a byte is represented with 2 characters in hex
+// so a valid constructor must be a multiple of 64 characters
 const checkConstructorArgsValidity = constArgs => constArgs && constArgs.length % 64 === 0;
 
 async function getConstructorArguments(
