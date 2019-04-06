@@ -66,7 +66,7 @@ If no `--optimizer` or `--optimize-runs` flags are provided, the library will at
 
 You can use `voeth` as an alias for `verify-on-etherscan`:
 ```
-API_KEY=<your_etherscan_api_key> npx voeth --network rinkeby ./build/contracts/*
+API_KEY=<your_etherscan_api_key> npx voeth --network rinkeby ./build/contracts/Contract1.json ./build/contracts/Contract2.json
 ```
 
 -------------
@@ -215,7 +215,7 @@ Keep in mind that recently verified contracts would still be reported as unverif
 
 ### Step 4
 
-[truffle-flattener]() processes **sourcePath** of each artifact and returns the flattened code.
+[truffle-flattener](https://github.com/nomiclabs/truffle-flattener) processes **sourcePath** of each artifact and returns the flattened code.
 
 ---
 
@@ -236,7 +236,7 @@ In case the bytecode and the transaction data don't match, provided source code 
 A typical contract creation transaction data looks like this:
 
 ```hex
-(solc v0.4.7<0.4.22)
+(solc v>=0.4.7 <0.4.22)
 0x6060604052[__contract_code__]a165627a7a72305820[__metadata__]0029[__constractor_arguments__]
 
 (solc v>=0.4.22)
