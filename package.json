@@ -1,6 +1,6 @@
 {
   "name": "verify-on-etherscan",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Automates verification on etherscan.io of ethereum contracts that were compiled and deployed with truffle",
   "keywords": [
     "verify",
