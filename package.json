@@ -15,7 +15,8 @@
     "voeth": "bin/verify-cli.js"
   },
   "files": [
-    "src/**/*"
+    "src/**/*",
+    "truffle-plugin.json"
   ],
   "scripts": {
     "lint": "eslint '**/*.js' --ignore-path .gitignore",
