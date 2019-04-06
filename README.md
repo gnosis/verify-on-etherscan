@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/gnosis/verify-on-etherscan.svg?branch=master)](https://travis-ci.org/gnosis/verify-on-etherscan?branch=master)
+[![NPM version](https://badge.fury.io/js/verify-on-etherscan.svg)](https://www.npmjs.com/package/verify-on-etherscan)
+
 # Verify on Etherscan
 CLI utility / truffle plugin / Node.js library that automates verification on etherscan.io of contracts that were compiled and deployed with truffle.
 
