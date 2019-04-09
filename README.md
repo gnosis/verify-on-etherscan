@@ -160,7 +160,7 @@ Options:
                         (optional, default: false)
   
   optimizer             optimizer settings object
-                        (default: {enabled: false, runs: 200 })
+                        (default: { enabled: false, runs: 200 })
                       
     optimizer.enabled   whether your contracts were optimized during compilation
     optimizer.runs      how many runs your contracts were optimized for during compilation
@@ -178,9 +178,9 @@ Options:
 
 If `web3` is provided, it will be used to determine which network to verify contracts on (through `web3.eth.net.getId()` matching).
 
-if `network` is provided and `useFecth === false`, an instance of `web3` will be created for you and connected to `https://<network>.infura.io`. `network` must be one of the netwerks which Etherscan supports for verification.
+if `network` is provided and `useFetch === false`, an instance of `web3` will be created for you and connected to `https://<network>.infura.io`. `network` must be one of the networks which Etherscan supports for verification.
 
-if `network` is provided and `useFecth === true`, no `web3` instance will be created and the library will fetch transactions from Etherscan api.
+if `network` is provided and `useFetch === true`, no `web3` instance will be created and the library will fetch transactions from Etherscan api.
 
 Either `web3` or `network` must be provided.
 
