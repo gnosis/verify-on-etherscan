@@ -54,7 +54,7 @@ function truffleConfig({
       },
       rinkeby: {
         provider: getProvider(urlRinkeby),
-        network_id: '*'
+        network_id: '4'
       },
       kovan: {
         provider: getProvider(urlKovan),
