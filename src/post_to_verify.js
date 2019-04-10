@@ -23,10 +23,14 @@ async function postToVerify(
   const files = Object.keys(artifactsData);
   logger && logger.log();
 
+  const alreadyVerified = [];
+  const successful = [];
+  const failed = [];
+
   if (files.length === 0) {
     logger &&
       logger.log(`All contracts deployed to ${network} network already verified. Exiting...`);
-    return;
+    return { alreadyVerified, successful, failed };
   }
 
   if (!apiKey) {
@@ -54,8 +58,6 @@ async function postToVerify(
     network === 'mainnet' ? '' : `${network}.`
   }etherscan.io/address`;
   const createContractCodeAtEthersacanURL = address => `${contractAtEtherscanURL}/${address}#code`;
-
-  const alreadyVerified = [];
 
   const GUIDs = await Promise.all(
     files.map(async f => {
@@ -147,9 +149,6 @@ async function postToVerify(
   };
 
   logger && logger.log();
-
-  const successful = [];
-  const failed = [];
 
   const waitForGuid = async guid => {
     const { contractname, contractaddress, file } = GUIDinProgress2contract[guid];

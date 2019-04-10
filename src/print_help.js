@@ -11,7 +11,7 @@ Usage: API_KEY=<your_key> truffle run verify [options] <artifacts...>
                         a network with its networkId must be available for verification on etherscan.io 
                         currently available are mainnet, rinkeby, kovan and ropsten
 
-    --output, -o        path to directory to write flattened contracts to (optional)
+    --output            path to directory to write flattened contracts to (optional)
                         for optional saving to filesystem
 
     --delay,  -d        delay (in ms) between checking if a contract has been verified after verification starts

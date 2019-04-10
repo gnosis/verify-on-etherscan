@@ -5,8 +5,7 @@ async function processPluginConfig(config) {
   const {
     working_directory: cwd,
     network,
-    o,
-    output = o,
+    output,
     compilers,
     useFetch,
     logger,
