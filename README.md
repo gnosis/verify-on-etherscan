@@ -124,7 +124,7 @@ First import it in your project then call it with your options:
 ```js
 const verify = require('verify-on-etherscan');
 
-await verify({
+const result = await verify({
   cwd,
   artifacts,
   apiKey,
@@ -139,7 +139,20 @@ await verify({
 })
 ```
 
-`verify(options)` returns a Promise that resolves to `undefined` when the verification is finished, or rejects if any unhandled Errors are thrown inside.
+`verify(options)` returns a Promise that resolves to
+
+```js
+  {
+    // contracts that were already verified on Etherscan
+    alreadyVerified: Array<absolute_artifact_paths>,
+    // contracts that were verified successfully
+    successful: Array<absolute_artifact_paths>,
+    // contracts for which verification failed
+    failed: Array<absolute_artifact_paths>
+  }
+```
+
+ when the verification is finished, or rejects if any unhandled Errors are thrown inside.
 
 Options:
 
