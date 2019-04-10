@@ -24,7 +24,8 @@ async function postToVerify(
   logger && logger.log();
 
   if (files.length === 0) {
-    logger && logger.log('All contracts already verified. Exiting...');
+    logger &&
+      logger.log(`All contracts deployed to ${network} network already verified. Exiting...`);
     return;
   }
 
@@ -53,6 +54,8 @@ async function postToVerify(
     network === 'mainnet' ? '' : `${network}.`
   }etherscan.io/address`;
   const createContractCodeAtEthersacanURL = address => `${contractAtEtherscanURL}/${address}#code`;
+
+  const alreadyVerified = [];
 
   const GUIDs = await Promise.all(
     files.map(async f => {
@@ -114,15 +117,23 @@ async function postToVerify(
         logger && logger.log(`Check progress at ${createCheckGUIDurl(guid)}\n`);
         return guid;
       }
+      // no need to try further if API_KEY is wrong
+      if (json.result === 'Missing or invalid ApiKey') throw new Error('Missing or invalid ApiKey');
+
       logger &&
         logger.log(`Error verifying ${contractname} at ${contractaddress}. ${json.result}\n`);
+
+      if (json.result === 'Contract source code already verified') {
+        alreadyVerified.push(f);
+      }
     })
   );
 
   const GUIDinProgress2contract = GUIDs.reduce((accum, guid, i) => {
     if (guid) {
-      const { contractname, contractaddress } = artifactsData[files[i]];
-      accum[guid] = { contractname, contractaddress };
+      const file = files[i];
+      const { contractname, contractaddress } = artifactsData[file];
+      accum[guid] = { contractname, contractaddress, file };
     }
     return accum;
   }, {});
@@ -137,8 +148,11 @@ async function postToVerify(
 
   logger && logger.log();
 
+  const successful = [];
+  const failed = [];
+
   const waitForGuid = async guid => {
-    const { contractname, contractaddress } = GUIDinProgress2contract[guid];
+    const { contractname, contractaddress, file } = GUIDinProgress2contract[guid];
     try {
       const json = await checkGUID(guid);
 
@@ -151,13 +165,15 @@ async function postToVerify(
             logger.log(
               `View verified code at ${createContractCodeAtEthersacanURL(contractaddress)}\n`
             );
-        }
+          successful.push(file);
+        } else failed.push(file);
       } else {
         verbose && logger && logger.log(`${contractname} at ${contractaddress}`, json.result);
       }
     } catch (error) {
       logger && logger.error(`${contractname} at ${contractaddress}`, error);
       delete GUIDinProgress2contract[guid];
+      failed.push(file);
     }
   };
 
@@ -173,6 +189,8 @@ async function postToVerify(
     await Promise.all(guids.map(waitForGuid));
     /* eslint-enable no-await-in-loop */
   }
+
+  return { alreadyVerified, successful, failed };
 }
 
 module.exports = postToVerify;

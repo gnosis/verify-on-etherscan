@@ -29,10 +29,15 @@ async function filterOutVerified(artifactsData, { apiUrl, logger, verbose }) {
     })
   );
 
-  return files.reduce((accum, f, i) => {
-    if (!verifiedContracts[i]) accum[f] = artifactsData[f];
+  const alreadyVerified = [];
+
+  const unverified = files.reduce((accum, f, i) => {
+    if (verifiedContracts[i]) alreadyVerified.push(f);
+    else accum[f] = artifactsData[f];
     return accum;
   }, {});
+
+  return { unverified, alreadyVerified };
 }
 
 module.exports = filterOutVerified;

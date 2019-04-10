@@ -16,7 +16,10 @@ async function verify(config) {
   const artifactsData = await gatherDataFromArtifacts(options);
 
   // filter out already verified contracts
-  const unverifiedArtifactsData = await filterOutVerified(artifactsData, options);
+  const { unverified: unverifiedArtifactsData, alreadyVerified } = await filterOutVerified(
+    artifactsData,
+    options
+  );
 
   const writeFlattened = typeof options.output === 'string';
   // get sourceCode from truffle-flattener
@@ -34,7 +37,18 @@ async function verify(config) {
   const constructorArguments = await getConstructorArguments(unverifiedArtifactsData, options);
 
   // submit post request
-  await postToVerify(unverifiedArtifactsData, flattenedContracts, constructorArguments, options);
+  /**
+   * @type {{ alreadyVerified: string[], successful: string[], failed: string[] }}
+   */
+  const res = await postToVerify(
+    unverifiedArtifactsData,
+    flattenedContracts,
+    constructorArguments,
+    options
+  );
+
+  res.alreadyVerified = alreadyVerified.concat(res.alreadyVerified);
+  return res;
 }
 
 module.exports = verify;
