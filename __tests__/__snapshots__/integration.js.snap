@@ -1,5 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Filters out verified contracts: Already verified 1`] = `
+Array [
+  "build/contracts/ERC20.json",
+  "build/contracts/Migrations.json",
+]
+`;
+
 exports[`Filters out verified contracts: Fetch calls 1`] = `
 [MockFunction] {
   "calls": Array [
@@ -2589,7 +2596,7 @@ contract TestToken is ERC20, ERC20Detailed {
         "size": 0,
         "timeout": 0,
         Symbol(Body internals): Object {
-          "body": "{\\"status\\":\\"0\\",\\"result\\":\\"Already verified\\"}",
+          "body": "{\\"status\\":\\"0\\",\\"result\\":\\"Contract source code already verified\\"}",
           "disturbed": true,
           "error": null,
         },
@@ -2609,7 +2616,7 @@ contract TestToken is ERC20, ERC20Detailed {
         "size": 0,
         "timeout": 0,
         Symbol(Body internals): Object {
-          "body": "{\\"status\\":\\"0\\",\\"result\\":\\"Already verified\\"}",
+          "body": "{\\"status\\":\\"0\\",\\"result\\":\\"Contract source code already verified\\"}",
           "disturbed": true,
           "error": null,
         },
@@ -2689,7 +2696,7 @@ contract TestToken is ERC20, ERC20Detailed {
         "size": 0,
         "timeout": 0,
         Symbol(Body internals): Object {
-          "body": "{\\"result\\":\\"Pending verification\\"}",
+          "body": "{\\"status\\":\\"0\\",\\"result\\":\\"Pending in queue\\"}",
           "disturbed": true,
           "error": null,
         },
@@ -2709,7 +2716,7 @@ contract TestToken is ERC20, ERC20Detailed {
         "size": 0,
         "timeout": 0,
         Symbol(Body internals): Object {
-          "body": "{\\"result\\":\\"Pending verification\\"}",
+          "body": "{\\"status\\":\\"0\\",\\"result\\":\\"Pending in queue\\"}",
           "disturbed": true,
           "error": null,
         },
@@ -2729,7 +2736,7 @@ contract TestToken is ERC20, ERC20Detailed {
         "size": 0,
         "timeout": 0,
         Symbol(Body internals): Object {
-          "body": "{\\"result\\":\\"Pending verification\\"}",
+          "body": "{\\"status\\":\\"0\\",\\"result\\":\\"Pending in queue\\"}",
           "disturbed": true,
           "error": null,
         },
@@ -2749,7 +2756,7 @@ contract TestToken is ERC20, ERC20Detailed {
         "size": 0,
         "timeout": 0,
         Symbol(Body internals): Object {
-          "body": "{\\"result\\":\\"Verified\\"}",
+          "body": "{\\"status\\":\\"1\\",\\"result\\":\\"Pass - Verified\\"}",
           "disturbed": true,
           "error": null,
         },
@@ -2769,7 +2776,7 @@ contract TestToken is ERC20, ERC20Detailed {
         "size": 0,
         "timeout": 0,
         Symbol(Body internals): Object {
-          "body": "{\\"result\\":\\"Verified\\"}",
+          "body": "{\\"status\\":\\"1\\",\\"result\\":\\"Pass - Verified\\"}",
           "disturbed": true,
           "error": null,
         },
@@ -2789,7 +2796,7 @@ contract TestToken is ERC20, ERC20Detailed {
         "size": 0,
         "timeout": 0,
         Symbol(Body internals): Object {
-          "body": "{\\"result\\":\\"Verified\\"}",
+          "body": "{\\"status\\":\\"1\\",\\"result\\":\\"Pass - Verified\\"}",
           "disturbed": true,
           "error": null,
         },
@@ -2807,15 +2814,30 @@ contract TestToken is ERC20, ERC20Detailed {
 }
 `;
 
+exports[`Posts to verify: Final result 1`] = `
+Object {
+  "alreadyVerified": Array [
+    "build/contracts/ERC20.json",
+    "build/contracts/Migrations.json",
+  ],
+  "failed": Array [],
+  "successful": Array [
+    "build/contracts/TestChildContract.json",
+    "build/contracts/TestContract.json",
+    "build/contracts/TestToken.json",
+  ],
+}
+`;
+
 exports[`Posts to verify: Log calls 1`] = `
 Array [
   Array [],
   Array [
-    "Error verifying ERC20 at 0x76608a542b425cBA81d277F6436007ADd848C0AF. Already verified
+    "Error verifying ERC20 at 0x76608a542b425cBA81d277F6436007ADd848C0AF. Contract source code already verified
 ",
   ],
   Array [
-    "Error verifying Migrations at 0xb1c657fa3806D78716dfcBeA9aF1aCf851077D6E. Already verified
+    "Error verifying Migrations at 0xb1c657fa3806D78716dfcBeA9aF1aCf851077D6E. Contract source code already verified
 ",
   ],
   Array [
@@ -2854,15 +2876,27 @@ Array [
   Array [],
   Array [
     "TestChildContract at 0xE71d2dDb3CA69a94b557695a9614D3262845EA11",
-    "Verified",
+    "Pass - Verified",
+  ],
+  Array [
+    "View verified code at https://rinkeby.etherscan.io/address/0xE71d2dDb3CA69a94b557695a9614D3262845EA11#code
+",
   ],
   Array [
     "TestContract at 0xC6FC5E99b5D253f6eabf53Fb2eAB94AF4e6A1444",
-    "Verified",
+    "Pass - Verified",
+  ],
+  Array [
+    "View verified code at https://rinkeby.etherscan.io/address/0xC6FC5E99b5D253f6eabf53Fb2eAB94AF4e6A1444#code
+",
   ],
   Array [
     "TestToken at 0xbE14913754d5A03c8f7c81C98c499033422898Be",
-    "Verified",
+    "Pass - Verified",
+  ],
+  Array [
+    "View verified code at https://rinkeby.etherscan.io/address/0xbE14913754d5A03c8f7c81C98c499033422898Be#code
+",
   ],
 ]
 `;

@@ -224,14 +224,20 @@ test('Filters out verified contracts', async () => {
     .mockReturnValueOnce(new Response(verifiedResp))
     .mockImplementation(() => new Response(unverifiedResp));
 
-  const unverifiedContracts = await filterOutVerified(artifactsData, { apiUrl, logger });
+  const { unverified: unverifiedContracts, alreadyVerified } = await filterOutVerified(
+    artifactsData,
+    { apiUrl, logger }
+  );
 
   expect(fetch).toMatchSnapshot('Fetch calls');
+
+  expect(replaceCWD(alreadyVerified)).toMatchSnapshot('Already verified');
 
   const all = Object.keys(artifactsData).length;
   const unverifiedKeys = Object.keys(unverifiedContracts);
   const verified = all - unverifiedKeys.length;
   expect(verified).toEqual(2);
+  expect(verified).toEqual(alreadyVerified.length);
 
   expect(unverifiedKeys).toMatchSnapshot('Unverified contracts');
 
@@ -319,12 +325,16 @@ test('Posts to verify', async () => {
   let i = -1;
   fetch.mockImplementation(() => {
     ++i;
-    if (i < 2) return new Response(JSON.stringify({ status: '0', result: 'Already verified' }));
+    if (i < 2)
+      return new Response(
+        JSON.stringify({ status: '0', result: 'Contract source code already verified' })
+      );
     if (i < filesNum) return new Response(JSON.stringify({ status: '1', result: `guid${i}` }));
 
-    if (i < 1.5 * filesNum) return new Response(JSON.stringify({ result: 'Pending verification' }));
+    if (i < 1.5 * filesNum)
+      return new Response(JSON.stringify({ status: '0', result: 'Pending in queue' }));
 
-    return new Response(JSON.stringify({ result: 'Verified' }));
+    return new Response(JSON.stringify({ status: '1', result: 'Pass - Verified' }));
   });
 
   const logger = {
@@ -340,7 +350,9 @@ test('Posts to verify', async () => {
     logger
   });
 
-  await promise;
+  const result = await promise;
+
+  expect(replaceCWD(result)).toMatchSnapshot('Final result');
 
   expect(fetch).toMatchSnapshot('Fetch calls');
   expect(logger.log.mock.calls).toMatchSnapshot('Log calls');
