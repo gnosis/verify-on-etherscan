@@ -16,7 +16,7 @@ const constructOptimizerFromOptions = ({ optimize, optimizeRuns }) => {
 const withObjectFunctionsDisabled = (object, cb) => {
   if (Object.isFrozen(object)) throw new Error("Object is frozen, can't reassign functions");
 
-  const noop = () => { };
+  const noop = () => {};
 
   const old = Reflect.ownKeys(object).reduce((accum, key) => {
     const val = object[key];
