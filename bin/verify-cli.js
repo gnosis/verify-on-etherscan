@@ -16,7 +16,7 @@ const constructOptimizerFromOptions = ({ optimize, optimizeRuns }) => {
 const withObjectFunctionsDisabled = (object, cb) => {
   if (Object.isFrozen(object)) throw new Error("Object is frozen, can't reassign functions");
 
-  const noop = () => {};
+  const noop = () => { };
 
   const old = Reflect.ownKeys(object).reduce((accum, key) => {
     const val = object[key];
@@ -45,7 +45,7 @@ const readTruffleConfig = () => {
   } catch (error) {
     try {
       truffleConfig = require(path.resolve('./truffle-config.js'));
-    } catch (error) {} // eslint-disable-line
+    } catch (error) { } // eslint-disable-line
   }
 
   return truffleConfig;
@@ -135,7 +135,6 @@ function main() {
         'how many runs your contracts were optimized for during compilation (sets --optimize to true if given)'
     })
     .option('output', {
-      alias: 'o',
       type: 'string',
       describe: 'which directory to write flattened contracts to'
     })

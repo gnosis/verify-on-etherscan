@@ -46,7 +46,7 @@ Options:
                         (sets --optimize to true if given)
                         [number]
 
-  --output, -o          which directory to write flattened contracts to
+  --output              which directory to write flattened contracts to
                         [string]
 
   --delay, -d           delay (in ms) between checking if a contract has been
@@ -97,7 +97,7 @@ Usage: API_KEY=<your_key> npx truffle run verify [options] <artifact_paths ...>
                         a network with its networkId must be available for verification on Etherscan 
                         currently available are mainnet, rinkeby, kovan and ropsten
 
-    --output, -o        path to directory to output flattened contracts to (optional)
+    --output            path to directory to output flattened contracts to (optional)
                         for optional saving to filesystem
 
     --delay,  -d        delay (in ms) between checking if a contract has been verified after verification starts
