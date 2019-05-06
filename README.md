@@ -10,7 +10,7 @@ The most common use case of verifying contracts after deployment should be cover
 API_KEY=<your_etherscan_api_key> npx verify-on-etherscan --network mainnet ./build/contracts/*
 ```
 
-Etherscan supports **mainnet, ropsten, rinkeby** and **kovan** networks for verification and requires a valid **Etherscan APIkey**. You can see details [here](https://rinkeby.etherscan.io/apis#contracts).
+Etherscan supports **mainnet, ropsten, rinkeby** and **kovan** networks for verification and requires a valid **Etherscan APIkey**. You can see details [here](https://etherscan.io/apis#contracts).
 
 ## Installation
 
@@ -65,9 +65,9 @@ Options:
 By default the library will use Etherscan api to fetch transactions.
 To use a `web3` for that set `--use-fetch=false`. That way an instance of `web3` will be created for you and connected to `https://<network>.infura.io`
 
-If no `--optimizer` or `--optimize-runs` flags are provided, the library will attampt to infer optimizer settings from `./truffle.js` or `./truffle-config.js` in the project directory. Failing that `{ enabled: false, runs: 200 }` will be used.
+If no `--optimizer` or `--optimize-runs` flags are provided, the library will attempt to infer optimizer settings from `./truffle.js` or `./truffle-config.js` in the project directory. Failing that `{ enabled: false, runs: 200 }` will be used.
 
-You can use `voeth` as an alias for `verify-on-etherscan`:
+You can use `voeth` as an alias for `verify-on-etherscan` if you install it locally:
 ```
 API_KEY=<your_etherscan_api_key> npx voeth --network rinkeby ./build/contracts/Contract1.json ./build/contracts/Contract2.json
 ```
