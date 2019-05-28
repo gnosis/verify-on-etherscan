@@ -901,17 +901,14 @@ Object {
 
 exports[`Gathers constructor arguments for relevant contracts: Decoded constructor arguments 1`] = `
 Object {
-  "build/contracts/TestChildContract.json": Result {
-    "0": "Child",
-    "__length__": 1,
-    "_name": "Child",
-  },
-  "build/contracts/TestToken.json": Result {
+  "build/contracts/TestChildContract.json": Array [
+    "Child",
+  ],
+  "build/contracts/TestToken.json": Object {
     "0": "Test Token",
     "1": "TST",
-    "2": "18",
-    "__length__": 3,
-    "decimals": "18",
+    "2": 18,
+    "decimals": 18,
     "name": "Test Token",
     "symbol": "TST",
   },

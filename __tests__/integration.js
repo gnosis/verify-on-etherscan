@@ -305,7 +305,7 @@ test('Gathers constructor arguments for relevant contracts', async () => {
       const art = await fs.readJSON(file);
       const { inputs } = art.abi.find(({ type }) => type === 'constructor');
 
-      const encodedArguments = constructorData[file];
+      const encodedArguments = `0x${constructorData[file]}`;
 
       return web3.eth.abi.decodeParameters(inputs, encodedArguments);
     })
