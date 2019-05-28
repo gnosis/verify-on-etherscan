@@ -229,7 +229,10 @@ test('Filters out verified contracts', async () => {
     { apiUrl, logger }
   );
 
-  expect(fetch).toMatchSnapshot('Fetch calls');
+  expect(fetch.mock.calls).toMatchSnapshot('Fetch calls');
+
+  const fetchReturns = fetch.mock.results.map(({ value: response }) => JSON.parse(response.body));
+  expect(fetchReturns).toMatchSnapshot('Fetch returns');
 
   expect(replaceCWD(alreadyVerified)).toMatchSnapshot('Already verified');
 
@@ -354,6 +357,10 @@ test('Posts to verify', async () => {
 
   expect(replaceCWD(result)).toMatchSnapshot('Final result');
 
-  expect(fetch).toMatchSnapshot('Fetch calls');
+  expect(fetch.mock.calls).toMatchSnapshot('Fetch calls');
+
+  const fetchReturns = fetch.mock.results.map(({ value: response }) => JSON.parse(response.body));
+  expect(fetchReturns).toMatchSnapshot('Fetch returns');
+
   expect(logger.log.mock.calls).toMatchSnapshot('Log calls');
 });
