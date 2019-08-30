@@ -85,9 +85,7 @@ async function postToVerify(
       } catch (error) {
         logger &&
           logger.error(
-            `Error sending verification request to ${contractAtEtherscanURL} for ${contractname} at ${contractaddress}: ${
-              error.message
-            }`
+            `Error sending verification request to ${contractAtEtherscanURL} for ${contractname} at ${contractaddress}: ${error.message}`
           );
         return;
       }
@@ -105,9 +103,7 @@ async function postToVerify(
       } catch (error) {
         logger &&
           logger.error(
-            `Error parsing verification response for ${contractname} at ${contractaddress}: ${
-              error.message
-            }`
+            `Error parsing verification response for ${contractname} at ${contractaddress}: ${error.message}`
           );
         return;
       }
