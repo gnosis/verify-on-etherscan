@@ -10,7 +10,7 @@ The most common use case of verifying contracts after deployment should be cover
 API_KEY=<your_etherscan_api_key> npx verify-on-etherscan --network mainnet ./build/contracts/*
 ```
 
-Etherscan supports **mainnet, ropsten, rinkeby** and **kovan** networks for verification and requires a valid **Etherscan APIkey**. You can see details [here](https://rinkeby.etherscan.io/apis#contracts).
+Etherscan supports **mainnet, ropsten, rinkeby, kovan** and **goerli** networks for verification and requires a valid **Etherscan APIkey**. You can see details [here](https://rinkeby.etherscan.io/apis#contracts).
 
 ## Installation
 
@@ -36,7 +36,7 @@ Options:
   --version, -v         Show version number
 
   --network             which network to verify contracts on
-                        [string] [required] [choices: "mainnet", "ropsten", "rinkeby", "kovan"]
+                        [string] [required] [choices: "mainnet", "ropsten", "rinkeby", "kovan", "goerli"]
 
   --optimize, -o        whether your contracts were optimized during compilation
                         (sets --optimize-runs to 200 if none given)
@@ -95,7 +95,7 @@ Usage: API_KEY=<your_key> npx truffle run verify [options] <artifact_paths ...>
     --network <name>    network from truffle.js file (required)
                         web3 instance is created with provider supplied by truffle to the plugin
                         a network with its networkId must be available for verification on Etherscan 
-                        currently available are mainnet, rinkeby, kovan and ropsten
+                        currently available are mainnet, rinkeby, kovan, ropsten and goerli
 
     --output            path to directory to output flattened contracts to (optional)
                         for optional saving to filesystem
