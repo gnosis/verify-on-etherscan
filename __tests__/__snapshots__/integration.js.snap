@@ -8,127 +8,43 @@ Array [
 `;
 
 exports[`Filters out verified contracts: Fetch calls 1`] = `
-[MockFunction] {
-  "calls": Array [
-    Array [
-      "https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=0x76608a542b425cBA81d277F6436007ADd848C0AF",
-    ],
-    Array [
-      "https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=0xb1c657fa3806D78716dfcBeA9aF1aCf851077D6E",
-    ],
-    Array [
-      "https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=0xE71d2dDb3CA69a94b557695a9614D3262845EA11",
-    ],
-    Array [
-      "https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=0xC6FC5E99b5D253f6eabf53Fb2eAB94AF4e6A1444",
-    ],
-    Array [
-      "https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=0xbE14913754d5A03c8f7c81C98c499033422898Be",
-    ],
+Array [
+  Array [
+    "https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=0x76608a542b425cBA81d277F6436007ADd848C0AF",
   ],
-  "results": Array [
-    Object {
-      "type": "return",
-      "value": Response {
-        "size": 0,
-        "timeout": 0,
-        Symbol(Body internals): Object {
-          "body": "{\\"status\\":\\"1\\"}",
-          "disturbed": true,
-          "error": null,
-        },
-        Symbol(Response internals): Object {
-          "headers": Headers {
-            Symbol(map): Object {},
-          },
-          "status": 200,
-          "statusText": "OK",
-          "url": undefined,
-        },
-      },
-    },
-    Object {
-      "type": "return",
-      "value": Response {
-        "size": 0,
-        "timeout": 0,
-        Symbol(Body internals): Object {
-          "body": "{\\"status\\":\\"1\\"}",
-          "disturbed": true,
-          "error": null,
-        },
-        Symbol(Response internals): Object {
-          "headers": Headers {
-            Symbol(map): Object {},
-          },
-          "status": 200,
-          "statusText": "OK",
-          "url": undefined,
-        },
-      },
-    },
-    Object {
-      "type": "return",
-      "value": Response {
-        "size": 0,
-        "timeout": 0,
-        Symbol(Body internals): Object {
-          "body": "{\\"status\\":\\"0\\"}",
-          "disturbed": true,
-          "error": null,
-        },
-        Symbol(Response internals): Object {
-          "headers": Headers {
-            Symbol(map): Object {},
-          },
-          "status": 200,
-          "statusText": "OK",
-          "url": undefined,
-        },
-      },
-    },
-    Object {
-      "type": "return",
-      "value": Response {
-        "size": 0,
-        "timeout": 0,
-        Symbol(Body internals): Object {
-          "body": "{\\"status\\":\\"0\\"}",
-          "disturbed": true,
-          "error": null,
-        },
-        Symbol(Response internals): Object {
-          "headers": Headers {
-            Symbol(map): Object {},
-          },
-          "status": 200,
-          "statusText": "OK",
-          "url": undefined,
-        },
-      },
-    },
-    Object {
-      "type": "return",
-      "value": Response {
-        "size": 0,
-        "timeout": 0,
-        Symbol(Body internals): Object {
-          "body": "{\\"status\\":\\"0\\"}",
-          "disturbed": true,
-          "error": null,
-        },
-        Symbol(Response internals): Object {
-          "headers": Headers {
-            Symbol(map): Object {},
-          },
-          "status": 200,
-          "statusText": "OK",
-          "url": undefined,
-        },
-      },
-    },
+  Array [
+    "https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=0xb1c657fa3806D78716dfcBeA9aF1aCf851077D6E",
   ],
-}
+  Array [
+    "https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=0xE71d2dDb3CA69a94b557695a9614D3262845EA11",
+  ],
+  Array [
+    "https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=0xC6FC5E99b5D253f6eabf53Fb2eAB94AF4e6A1444",
+  ],
+  Array [
+    "https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=0xbE14913754d5A03c8f7c81C98c499033422898Be",
+  ],
+]
+`;
+
+exports[`Filters out verified contracts: Fetch returns 1`] = `
+Array [
+  Object {
+    "status": "1",
+  },
+  Object {
+    "status": "1",
+  },
+  Object {
+    "status": "0",
+  },
+  Object {
+    "status": "0",
+  },
+  Object {
+    "status": "0",
+  },
+]
 `;
 
 exports[`Filters out verified contracts: Log calls 1`] = `
@@ -1709,31 +1625,30 @@ contract TestToken is ERC20, ERC20Detailed {
 `;
 
 exports[`Posts to verify: Fetch calls 1`] = `
-[MockFunction] {
-  "calls": Array [
-    Array [
-      "https://api-rinkeby.etherscan.io/api",
-      Object {
-        "body": URLSearchParams {
-          Symbol(query): Array [
-            "contractname",
-            "ERC20",
-            "compilerversion",
-            "v0.5.2+commit.1df8f40c",
-            "contractaddress",
-            "0x76608a542b425cBA81d277F6436007ADd848C0AF",
-            "apikey",
-            "<your etherscan api key>",
-            "optimizationUsed",
-            "1",
-            "runs",
-            "200",
-            "module",
-            "contract",
-            "action",
-            "verifysourcecode",
-            "sourceCode",
-            "
+Array [
+  Array [
+    "https://api-rinkeby.etherscan.io/api",
+    Object {
+      "body": URLSearchParams {
+        Symbol(query): Array [
+          "contractname",
+          "ERC20",
+          "compilerversion",
+          "v0.5.2+commit.1df8f40c",
+          "contractaddress",
+          "0x76608a542b425cBA81d277F6436007ADd848C0AF",
+          "apikey",
+          "<your etherscan api key>",
+          "optimizationUsed",
+          "1",
+          "runs",
+          "200",
+          "module",
+          "contract",
+          "action",
+          "verifysourcecode",
+          "sourceCode",
+          "
 // File: openzeppelin-solidity/contracts/token/ERC20/IERC20.sol
 
 pragma solidity ^0.5.2;
@@ -2020,38 +1935,38 @@ contract ERC20 is IERC20 {
     }
 }
 ",
-          ],
-          Symbol(context): null,
-        },
-        "headers": Object {
-          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-        },
-        "method": "post",
+        ],
+        Symbol(context): null,
       },
-    ],
-    Array [
-      "https://api-rinkeby.etherscan.io/api",
-      Object {
-        "body": URLSearchParams {
-          Symbol(query): Array [
-            "contractname",
-            "Migrations",
-            "compilerversion",
-            "v0.5.2+commit.1df8f40c",
-            "contractaddress",
-            "0xb1c657fa3806D78716dfcBeA9aF1aCf851077D6E",
-            "apikey",
-            "<your etherscan api key>",
-            "optimizationUsed",
-            "1",
-            "runs",
-            "200",
-            "module",
-            "contract",
-            "action",
-            "verifysourcecode",
-            "sourceCode",
-            "
+      "headers": Object {
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+      "method": "post",
+    },
+  ],
+  Array [
+    "https://api-rinkeby.etherscan.io/api",
+    Object {
+      "body": URLSearchParams {
+        Symbol(query): Array [
+          "contractname",
+          "Migrations",
+          "compilerversion",
+          "v0.5.2+commit.1df8f40c",
+          "contractaddress",
+          "0xb1c657fa3806D78716dfcBeA9aF1aCf851077D6E",
+          "apikey",
+          "<your etherscan api key>",
+          "optimizationUsed",
+          "1",
+          "runs",
+          "200",
+          "module",
+          "contract",
+          "action",
+          "verifysourcecode",
+          "sourceCode",
+          "
 // File: contracts/Migrations.sol
 
 pragma solidity >=0.4.21 <0.6.0;
@@ -2078,38 +1993,38 @@ contract Migrations {
   }
 }
 ",
-          ],
-          Symbol(context): null,
-        },
-        "headers": Object {
-          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-        },
-        "method": "post",
+        ],
+        Symbol(context): null,
       },
-    ],
-    Array [
-      "https://api-rinkeby.etherscan.io/api",
-      Object {
-        "body": URLSearchParams {
-          Symbol(query): Array [
-            "contractname",
-            "TestChildContract",
-            "compilerversion",
-            "v0.5.2+commit.1df8f40c",
-            "contractaddress",
-            "0xE71d2dDb3CA69a94b557695a9614D3262845EA11",
-            "apikey",
-            "<your etherscan api key>",
-            "optimizationUsed",
-            "1",
-            "runs",
-            "200",
-            "module",
-            "contract",
-            "action",
-            "verifysourcecode",
-            "sourceCode",
-            "
+      "headers": Object {
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+      "method": "post",
+    },
+  ],
+  Array [
+    "https://api-rinkeby.etherscan.io/api",
+    Object {
+      "body": URLSearchParams {
+        Symbol(query): Array [
+          "contractname",
+          "TestChildContract",
+          "compilerversion",
+          "v0.5.2+commit.1df8f40c",
+          "contractaddress",
+          "0xE71d2dDb3CA69a94b557695a9614D3262845EA11",
+          "apikey",
+          "<your etherscan api key>",
+          "optimizationUsed",
+          "1",
+          "runs",
+          "200",
+          "module",
+          "contract",
+          "action",
+          "verifysourcecode",
+          "sourceCode",
+          "
 // File: contracts/TestParentContract.sol
 
 pragma solidity >=0.4.21 <0.6.0;
@@ -2137,40 +2052,40 @@ contract TestChildContract is TestParentContract(\\"Parent\\") {
     }
 }
 ",
-            "constructorArguements",
-            "000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000054368696c64000000000000000000000000000000000000000000000000000000",
-          ],
-          Symbol(context): null,
-        },
-        "headers": Object {
-          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-        },
-        "method": "post",
+          "constructorArguements",
+          "000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000054368696c64000000000000000000000000000000000000000000000000000000",
+        ],
+        Symbol(context): null,
       },
-    ],
-    Array [
-      "https://api-rinkeby.etherscan.io/api",
-      Object {
-        "body": URLSearchParams {
-          Symbol(query): Array [
-            "contractname",
-            "TestContract",
-            "compilerversion",
-            "v0.5.2+commit.1df8f40c",
-            "contractaddress",
-            "0xC6FC5E99b5D253f6eabf53Fb2eAB94AF4e6A1444",
-            "apikey",
-            "<your etherscan api key>",
-            "optimizationUsed",
-            "1",
-            "runs",
-            "200",
-            "module",
-            "contract",
-            "action",
-            "verifysourcecode",
-            "sourceCode",
-            "
+      "headers": Object {
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+      "method": "post",
+    },
+  ],
+  Array [
+    "https://api-rinkeby.etherscan.io/api",
+    Object {
+      "body": URLSearchParams {
+        Symbol(query): Array [
+          "contractname",
+          "TestContract",
+          "compilerversion",
+          "v0.5.2+commit.1df8f40c",
+          "contractaddress",
+          "0xC6FC5E99b5D253f6eabf53Fb2eAB94AF4e6A1444",
+          "apikey",
+          "<your etherscan api key>",
+          "optimizationUsed",
+          "1",
+          "runs",
+          "200",
+          "module",
+          "contract",
+          "action",
+          "verifysourcecode",
+          "sourceCode",
+          "
 // File: contracts/TestContract.sol
 
 pragma solidity >=0.4.21 <0.6.0;
@@ -2183,38 +2098,38 @@ contract TestContract {
     }
 }
 ",
-          ],
-          Symbol(context): null,
-        },
-        "headers": Object {
-          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-        },
-        "method": "post",
+        ],
+        Symbol(context): null,
       },
-    ],
-    Array [
-      "https://api-rinkeby.etherscan.io/api",
-      Object {
-        "body": URLSearchParams {
-          Symbol(query): Array [
-            "contractname",
-            "TestToken",
-            "compilerversion",
-            "v0.5.2+commit.1df8f40c",
-            "contractaddress",
-            "0xbE14913754d5A03c8f7c81C98c499033422898Be",
-            "apikey",
-            "<your etherscan api key>",
-            "optimizationUsed",
-            "1",
-            "runs",
-            "200",
-            "module",
-            "contract",
-            "action",
-            "verifysourcecode",
-            "sourceCode",
-            "
+      "headers": Object {
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+      "method": "post",
+    },
+  ],
+  Array [
+    "https://api-rinkeby.etherscan.io/api",
+    Object {
+      "body": URLSearchParams {
+        Symbol(query): Array [
+          "contractname",
+          "TestToken",
+          "compilerversion",
+          "v0.5.2+commit.1df8f40c",
+          "contractaddress",
+          "0xbE14913754d5A03c8f7c81C98c499033422898Be",
+          "apikey",
+          "<your etherscan api key>",
+          "optimizationUsed",
+          "1",
+          "runs",
+          "200",
+          "module",
+          "contract",
+          "action",
+          "verifysourcecode",
+          "sourceCode",
+          "
 // File: openzeppelin-solidity/contracts/token/ERC20/IERC20.sol
 
 pragma solidity ^0.5.2;
@@ -2559,259 +2474,85 @@ contract TestToken is ERC20, ERC20Detailed {
     ) ERC20Detailed(name, symbol, decimals) public {}
 }
 ",
-            "constructorArguements",
-            "000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000000a5465737420546f6b656e0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000035453540000000000000000000000000000000000000000000000000000000000",
-          ],
-          Symbol(context): null,
-        },
-        "headers": Object {
-          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-        },
-        "method": "post",
+          "constructorArguements",
+          "000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000000a5465737420546f6b656e0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000035453540000000000000000000000000000000000000000000000000000000000",
+        ],
+        Symbol(context): null,
       },
-    ],
-    Array [
-      "https://api-rinkeby.etherscan.io/api?module=contract&action=checkverifystatus&guid=guid2",
-    ],
-    Array [
-      "https://api-rinkeby.etherscan.io/api?module=contract&action=checkverifystatus&guid=guid3",
-    ],
-    Array [
-      "https://api-rinkeby.etherscan.io/api?module=contract&action=checkverifystatus&guid=guid4",
-    ],
-    Array [
-      "https://api-rinkeby.etherscan.io/api?module=contract&action=checkverifystatus&guid=guid2",
-    ],
-    Array [
-      "https://api-rinkeby.etherscan.io/api?module=contract&action=checkverifystatus&guid=guid3",
-    ],
-    Array [
-      "https://api-rinkeby.etherscan.io/api?module=contract&action=checkverifystatus&guid=guid4",
-    ],
-  ],
-  "results": Array [
-    Object {
-      "type": "return",
-      "value": Response {
-        "size": 0,
-        "timeout": 0,
-        Symbol(Body internals): Object {
-          "body": "{\\"status\\":\\"0\\",\\"result\\":\\"Contract source code already verified\\"}",
-          "disturbed": true,
-          "error": null,
-        },
-        Symbol(Response internals): Object {
-          "headers": Headers {
-            Symbol(map): Object {},
-          },
-          "status": 200,
-          "statusText": "OK",
-          "url": undefined,
-        },
+      "headers": Object {
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
       },
-    },
-    Object {
-      "type": "return",
-      "value": Response {
-        "size": 0,
-        "timeout": 0,
-        Symbol(Body internals): Object {
-          "body": "{\\"status\\":\\"0\\",\\"result\\":\\"Contract source code already verified\\"}",
-          "disturbed": true,
-          "error": null,
-        },
-        Symbol(Response internals): Object {
-          "headers": Headers {
-            Symbol(map): Object {},
-          },
-          "status": 200,
-          "statusText": "OK",
-          "url": undefined,
-        },
-      },
-    },
-    Object {
-      "type": "return",
-      "value": Response {
-        "size": 0,
-        "timeout": 0,
-        Symbol(Body internals): Object {
-          "body": "{\\"status\\":\\"1\\",\\"result\\":\\"guid2\\"}",
-          "disturbed": true,
-          "error": null,
-        },
-        Symbol(Response internals): Object {
-          "headers": Headers {
-            Symbol(map): Object {},
-          },
-          "status": 200,
-          "statusText": "OK",
-          "url": undefined,
-        },
-      },
-    },
-    Object {
-      "type": "return",
-      "value": Response {
-        "size": 0,
-        "timeout": 0,
-        Symbol(Body internals): Object {
-          "body": "{\\"status\\":\\"1\\",\\"result\\":\\"guid3\\"}",
-          "disturbed": true,
-          "error": null,
-        },
-        Symbol(Response internals): Object {
-          "headers": Headers {
-            Symbol(map): Object {},
-          },
-          "status": 200,
-          "statusText": "OK",
-          "url": undefined,
-        },
-      },
-    },
-    Object {
-      "type": "return",
-      "value": Response {
-        "size": 0,
-        "timeout": 0,
-        Symbol(Body internals): Object {
-          "body": "{\\"status\\":\\"1\\",\\"result\\":\\"guid4\\"}",
-          "disturbed": true,
-          "error": null,
-        },
-        Symbol(Response internals): Object {
-          "headers": Headers {
-            Symbol(map): Object {},
-          },
-          "status": 200,
-          "statusText": "OK",
-          "url": undefined,
-        },
-      },
-    },
-    Object {
-      "type": "return",
-      "value": Response {
-        "size": 0,
-        "timeout": 0,
-        Symbol(Body internals): Object {
-          "body": "{\\"status\\":\\"0\\",\\"result\\":\\"Pending in queue\\"}",
-          "disturbed": true,
-          "error": null,
-        },
-        Symbol(Response internals): Object {
-          "headers": Headers {
-            Symbol(map): Object {},
-          },
-          "status": 200,
-          "statusText": "OK",
-          "url": undefined,
-        },
-      },
-    },
-    Object {
-      "type": "return",
-      "value": Response {
-        "size": 0,
-        "timeout": 0,
-        Symbol(Body internals): Object {
-          "body": "{\\"status\\":\\"0\\",\\"result\\":\\"Pending in queue\\"}",
-          "disturbed": true,
-          "error": null,
-        },
-        Symbol(Response internals): Object {
-          "headers": Headers {
-            Symbol(map): Object {},
-          },
-          "status": 200,
-          "statusText": "OK",
-          "url": undefined,
-        },
-      },
-    },
-    Object {
-      "type": "return",
-      "value": Response {
-        "size": 0,
-        "timeout": 0,
-        Symbol(Body internals): Object {
-          "body": "{\\"status\\":\\"0\\",\\"result\\":\\"Pending in queue\\"}",
-          "disturbed": true,
-          "error": null,
-        },
-        Symbol(Response internals): Object {
-          "headers": Headers {
-            Symbol(map): Object {},
-          },
-          "status": 200,
-          "statusText": "OK",
-          "url": undefined,
-        },
-      },
-    },
-    Object {
-      "type": "return",
-      "value": Response {
-        "size": 0,
-        "timeout": 0,
-        Symbol(Body internals): Object {
-          "body": "{\\"status\\":\\"1\\",\\"result\\":\\"Pass - Verified\\"}",
-          "disturbed": true,
-          "error": null,
-        },
-        Symbol(Response internals): Object {
-          "headers": Headers {
-            Symbol(map): Object {},
-          },
-          "status": 200,
-          "statusText": "OK",
-          "url": undefined,
-        },
-      },
-    },
-    Object {
-      "type": "return",
-      "value": Response {
-        "size": 0,
-        "timeout": 0,
-        Symbol(Body internals): Object {
-          "body": "{\\"status\\":\\"1\\",\\"result\\":\\"Pass - Verified\\"}",
-          "disturbed": true,
-          "error": null,
-        },
-        Symbol(Response internals): Object {
-          "headers": Headers {
-            Symbol(map): Object {},
-          },
-          "status": 200,
-          "statusText": "OK",
-          "url": undefined,
-        },
-      },
-    },
-    Object {
-      "type": "return",
-      "value": Response {
-        "size": 0,
-        "timeout": 0,
-        Symbol(Body internals): Object {
-          "body": "{\\"status\\":\\"1\\",\\"result\\":\\"Pass - Verified\\"}",
-          "disturbed": true,
-          "error": null,
-        },
-        Symbol(Response internals): Object {
-          "headers": Headers {
-            Symbol(map): Object {},
-          },
-          "status": 200,
-          "statusText": "OK",
-          "url": undefined,
-        },
-      },
+      "method": "post",
     },
   ],
-}
+  Array [
+    "https://api-rinkeby.etherscan.io/api?module=contract&action=checkverifystatus&guid=guid2",
+  ],
+  Array [
+    "https://api-rinkeby.etherscan.io/api?module=contract&action=checkverifystatus&guid=guid3",
+  ],
+  Array [
+    "https://api-rinkeby.etherscan.io/api?module=contract&action=checkverifystatus&guid=guid4",
+  ],
+  Array [
+    "https://api-rinkeby.etherscan.io/api?module=contract&action=checkverifystatus&guid=guid2",
+  ],
+  Array [
+    "https://api-rinkeby.etherscan.io/api?module=contract&action=checkverifystatus&guid=guid3",
+  ],
+  Array [
+    "https://api-rinkeby.etherscan.io/api?module=contract&action=checkverifystatus&guid=guid4",
+  ],
+]
+`;
+
+exports[`Posts to verify: Fetch returns 1`] = `
+Array [
+  Object {
+    "result": "Contract source code already verified",
+    "status": "0",
+  },
+  Object {
+    "result": "Contract source code already verified",
+    "status": "0",
+  },
+  Object {
+    "result": "guid2",
+    "status": "1",
+  },
+  Object {
+    "result": "guid3",
+    "status": "1",
+  },
+  Object {
+    "result": "guid4",
+    "status": "1",
+  },
+  Object {
+    "result": "Pending in queue",
+    "status": "0",
+  },
+  Object {
+    "result": "Pending in queue",
+    "status": "0",
+  },
+  Object {
+    "result": "Pending in queue",
+    "status": "0",
+  },
+  Object {
+    "result": "Pass - Verified",
+    "status": "1",
+  },
+  Object {
+    "result": "Pass - Verified",
+    "status": "1",
+  },
+  Object {
+    "result": "Pass - Verified",
+    "status": "1",
+  },
+]
 `;
 
 exports[`Posts to verify: Final result 1`] = `

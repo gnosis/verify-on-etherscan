@@ -9,7 +9,7 @@ Usage: API_KEY=<your_key> truffle run verify [options] <artifacts...>
     --network <name>    network from truffle.js file (required)
                         web3 instance is created with provider supplied by truffle to the plugin
                         a network with its networkId must be available for verification on etherscan.io 
-                        currently available are mainnet, rinkeby, kovan and ropsten
+                        currently available are mainnet, rinkeby, kovan, ropsten and goerli
 
     --output            path to directory to write flattened contracts to (optional)
                         for optional saving to filesystem
