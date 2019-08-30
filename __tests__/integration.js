@@ -143,12 +143,12 @@ describe('Process config', () => {
     );
   });
   test('plugin config without network throws', async () => {
-    expect(processPluginConfig({ ...config, network: undefined })).rejects.toThrow(
+    await expect(processPluginConfig({ ...config, network: undefined })).rejects.toThrow(
       'No network provided. Run truffle run verify --help to see usage.'
     );
   });
   test('plugin config with invalid provider throws', async () => {
-    expect(
+    await expect(
       processPluginConfig({
         ...config,
         get provider() {
@@ -179,7 +179,7 @@ describe('Process config', () => {
         }
       }
     };
-    expect(processConfig({ artifacts, web3: web3mock })).rejects.toThrow(
+    await expect(processConfig({ artifacts, web3: web3mock })).rejects.toThrow(
       `Network with id ${unavailableId} isn't available on etherscan.io for verification`
     );
   });
