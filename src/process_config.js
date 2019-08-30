@@ -54,6 +54,7 @@ const id2Network = {
   1: 'mainnet',
   3: 'ropsten',
   4: 'rinkeby',
+  5: 'goerli',
   42: 'kovan'
 };
 
@@ -70,7 +71,8 @@ const network2InfuraURL = {
   mainnet: 'https://mainnet.infura.io',
   ropsten: 'https://ropsten.infura.io',
   rinkeby: 'https://rinkeby.infura.io',
-  kovan: 'https://kovan.infura.io'
+  kovan: 'https://kovan.infura.io',
+  goerli: 'https://goerli.infura.io'
 };
 
 const createWeb3Instance = network => {
