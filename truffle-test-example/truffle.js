@@ -19,6 +19,8 @@ if (!privateKey && !mnemonic) {
 function truffleConfig({
   urlRinkeby = 'https://rinkeby.infura.io/',
   urlKovan = 'https://kovan.infura.io/',
+  urlRopsten = 'https://ropsten.infura.io/',
+  urlGoerli = 'https://goerli.infura.io/',
   urlMainnet = 'https://mainnet.infura.io',
   urlDevelopment = 'localhost',
   portDevelopment = 8545
@@ -59,6 +61,14 @@ function truffleConfig({
       kovan: {
         provider: getProvider(urlKovan),
         network_id: '42'
+      },
+      ropsten: {
+        provider: getProvider(urlRopsten),
+        network_id: '3'
+      },
+      goerli: {
+        provider: getProvider(urlGoerli),
+        network_id: '5'
       }
     },
     compilers: {
