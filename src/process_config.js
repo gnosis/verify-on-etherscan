@@ -55,7 +55,8 @@ const id2Network = {
   3: 'ropsten',
   4: 'rinkeby',
   5: 'goerli',
-  42: 'kovan'
+  42: 'kovan',
+  80001: 'mumbai'
 };
 
 const availableNetworks = Object.values(id2Network);
@@ -72,7 +73,8 @@ const network2InfuraURL = {
   ropsten: 'https://ropsten.infura.io',
   rinkeby: 'https://rinkeby.infura.io',
   kovan: 'https://kovan.infura.io',
-  goerli: 'https://goerli.infura.io'
+  goerli: 'https://goerli.infura.io',
+  mumbai: 'https://polygon-mumbai.infura.io'
 };
 
 const createWeb3Instance = network => {
@@ -121,9 +123,12 @@ async function processConfig(options) {
     }
   }
 
-  const apiUrl = `https://api${
+  let apiUrl = `https://api${
     etherscanNetwork === 'mainnet' ? '' : `-${etherscanNetwork}`
   }.etherscan.io/api`;
+  if (etherscanNetwork === 'mumbai') {
+    apiUrl = 'https://api-testnet.polygonscan.com/api';
+  }
 
   const config = {
     optimizer: DEFAULT_OPTIMIZER_CONFIG,
