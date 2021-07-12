@@ -53,10 +53,9 @@ async function postToVerify(
 
   const createCheckGUIDurl = guid =>
     `${apiUrl}?module=contract&action=checkverifystatus&guid=${guid}`;
-
-  const contractAtEtherscanURL = `https://${
-    network === 'mainnet' ? '' : `${network}.`
-  }etherscan.io/address`;
+  const contractAtEtherscanURL = `https://${network === 'mainnet' ? '' : `${network}.`}${
+    network === 'mumbai' ? 'polygonscan.com' : `etherscan.io`
+  }/address`;
   const createContractCodeAtEthersacanURL = address => `${contractAtEtherscanURL}/${address}#code`;
 
   const GUIDs = await Promise.all(

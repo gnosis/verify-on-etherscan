@@ -22,7 +22,9 @@ async function getConstructorArguments(
 ) {
   const files = Object.keys(artifactsData);
 
-  const etherscanURL = `${network === 'mainnet' ? '' : `${network}.`}etherscan.io`;
+  const etherscanURL = `${network === 'mainnet' ? '' : `${network}.`}${
+    network === 'mumbai' ? 'polygonscan.com' : `etherscan.io`
+  }.io`;
 
   const getTransaction =
     web3 && !useFetch
