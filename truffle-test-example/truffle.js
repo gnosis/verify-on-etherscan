@@ -20,6 +20,7 @@ function truffleConfig({
   urlRinkeby = 'https://rinkeby.infura.io/',
   urlKovan = 'https://kovan.infura.io/',
   urlRopsten = 'https://ropsten.infura.io/',
+  urlSepolia = 'https://sepolia.infura.io',
   urlGoerli = 'https://goerli.infura.io/',
   urlMainnet = 'https://mainnet.infura.io',
   urlDevelopment = 'localhost',
@@ -65,6 +66,10 @@ function truffleConfig({
       ropsten: {
         provider: getProvider(urlRopsten),
         network_id: '3'
+      },
+      sepolia: {
+        provider: getProvider(urlSepolia),
+        network_id: '11155111'
       },
       goerli: {
         provider: getProvider(urlGoerli),
