@@ -55,7 +55,8 @@ const id2Network = {
   3: 'ropsten',
   4: 'rinkeby',
   5: 'goerli',
-  42: 'kovan'
+  42: 'kovan',
+  11155111: 'sepolia'
 };
 
 const availableNetworks = Object.values(id2Network);
@@ -72,6 +73,7 @@ const network2InfuraURL = {
   ropsten: 'https://ropsten.infura.io',
   rinkeby: 'https://rinkeby.infura.io',
   kovan: 'https://kovan.infura.io',
+  sepolia: 'https://sepolia.infura.io',
   goerli: 'https://goerli.infura.io'
 };
 
